@@ -12,4 +12,4 @@ if (!$db) {
 echo ini_get('display_errors');
 
 echo("hello world.\n");
-echo("Hi, I'm Paul");
+echo("Hi, I'm shloka");
