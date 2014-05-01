@@ -1,15 +1,20 @@
-<?php
-
-function pg_connection_string() {
-    return "dbname=d2ffcrdlj7m0dp host=ec2-54-197-246-197.compute-1.amazonaws.com port=5432 user=ihtxpbixayjwqp password=lk0N0phG-frjKVxCYIEUi4U-I6 sslmode=require";
-}
-
-$db = pg_connect(pg_connection_string());
-if (!$db) {
-    echo("Database connection error.");
-}
-
-echo ini_get('display_errors');
-
-echo("hello world.\n");
-echo("Hi, I'm Paul");
+<html>
+<body>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <h1>Secret Graffiti</h1>
+    <script>
+        console.log("hello dudes.")
+        $.getJSON(
+            "script.php",
+            { foo: "Hello from JavaScript. Blah blah." }
+        )
+        .done(function(data) {
+            console.info("Success.")
+            console.log(data)
+        })
+        .fail(function() {
+            console.info("AJAX didn't work.")
+        })
+    </script>
+</body>
+</html>
