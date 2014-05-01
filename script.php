@@ -13,7 +13,7 @@
 if($_GET['foo']) {
 	$result = array(
 		"GET variable Foo" => $_GET['foo'],
-		"PHP Replies" => "Hello from PHP".
+		"PHP Replies" => "Hello from PHP",
 		"img" => "me.jpg"
 	);
 	echo json_encode($result);
