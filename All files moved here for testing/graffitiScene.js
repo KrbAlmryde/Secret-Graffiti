@@ -16,7 +16,7 @@ function onCreate() {
 
     /***************************** SETUP CAMERA *****************************/
 
-    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0, 1000);
     camera.position.set(0,0,10)
     // camera.rotation.y = -10;
     camera.lookAt(scene.position);
