@@ -19,7 +19,7 @@
             }
 			.tools { margin-bottom: 10px; }
 			.tools a {
-				border:1px solid #E0E0E0; height: 25px; line-height: 25px; padding: 0 10px; vertical-align: middle; text-align: center; text-decoration: none; display: inline-block; color: black;
+				border:1px solid #E0E0E0; height: 50px; line-height: 50px; padding: 0 10px; vertical-align: middle; text-align: center; text-decoration: none; display: inline-block; color: black;
 			}
 			
     </style>
@@ -29,7 +29,7 @@
 		
 		
         <div class='tools'>
-            <button onclick="save" style="float: right; width: 100px;">Download</button>
+            <button onclick="save" style="float: right; width: 100px; height:50px">Save</button>
          </div>
           <script>
 			function save() {
@@ -66,15 +66,16 @@
 		  <script type='text/javascript'>
             $(function() {
               $.each(['#424F5F', '#017B90', '#CAC6C3', '#96BD3C', '#C4D525', '#FFC90B', '#FF8730', '#FA031E', '#A43C3D', '#DA4F6E', '#593C50', '#B88B52', '#FFFFFF', '#000000'], function() {
-                $('.tools').append("<a href='#colors_sketch' data-color='" + this + "' style='width: 3px; background: " + this + ";'></a> ");
+                $('.tools').append("<a href='#colors_sketch' data-color='" + this + "' style='width: 30px; background: " + this + ";'></a> ");
               });
               $.each([3, 5, 10, 15], function() {
-                $('.tools').append("<a href='#colors_sketch' data-size='" + this + "' style='background: #E0E0E0'; width: 3px>" + this + "</a> ");
+                $('.tools').append("<a href='#colors_sketch' data-size='" + this + "' style='background: #E0E0E0'; width: 30px>" + this + "</a> ");
               });
               $('#colors_sketch').sketch();
             });
           </script>
 
         </div>
+		
     </body>
 </html>
