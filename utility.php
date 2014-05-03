@@ -30,7 +30,7 @@ echo("<table>");
 // foreach ($rows as $row) {
 //
 // }
-echo("</table>")
+echo("</table>");
 
 echo("Utility foob");
 
@@ -44,6 +44,32 @@ echo("Utility foob");
 //
 $folderMetadata = $dbxClient->getMetadataWithChildren("/");
 print_r($folderMetadata);
+
+function saveFile($name) {
+
+}
+
+if($_GET['saveTest']) {
+	echo("savetest");
+	$file = fopen("./pics/savetest.jpg", "w");
+	$dbxClient->getFile("/test.jpg", $file);
+	fclose($file);
+}
+
+if($_GET['getBrick']) {
+	echo("getBrick");
+	$file = fopen("./pics/brick.jpg", "w");
+	$dbxClient->getFile("/brick.jpg", $file);
+	fclose($file);
+	// echo("<img src='./pics/brick.jpg' />");
+}
+
+if($_GET['writeBrick']) {
+	echo("writeBrick");
+	$file = fopen("./pics/brick.jpg", "rb");
+	$dbxClient->uploadFile("/brick.jpg", dbx\WriteMode::force(), $file);
+}
+
 //
 // echo ($dbxClient->appendFilePath( "foo/", string $path )
 

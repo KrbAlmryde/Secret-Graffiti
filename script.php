@@ -1,5 +1,19 @@
 <?php
 
+require_once "dropbox-sdk/Dropbox/autoload.php";
+use \Dropbox as dbx;
+
+$accessToken = "2pmnCeiQIlgAAAAAAAAERHyC0MgB03sTgSCouSyxj2lKwoH27DLkz7PB9ZpzXset";
+
+$dbxClient = new dbx\Client($accessToken, "secret-graffiti");
+
+if($_GET['getBrick']) {
+	echo("getBrick");
+	$file = fopen("./pics/brick.jpg", "w");
+	$dbxClient->getFile("/brick.jpg", $file);
+	fclose($file);
+	// echo("<img src='./pics/brick.jpg' />");
+}
 // error_reporting(E_ALL);
 
 // if($_GET['bar']) {
@@ -10,14 +24,14 @@
 // 	echo json_encode($result);
 // }
 
-if($_GET['foo']) {
-	$result = array(
-		"GET variable Foo" => $_GET['foo'],
-		"PHP Replies" => "Hello from PHP",
-		"img" => "me.jpg"
-	);
-	echo json_encode($result);
-}
+// if($_GET['foo']) {
+// 	$result = array(
+// 		"GET variable Foo" => $_GET['foo'],
+// 		"PHP Replies" => "Hello from PHP",
+// 		"img" => "me.jpg"
+// 	);
+// 	echo json_encode($result);
+// }
 
 // function pg_connection_string() {
 // 	return "dbname=d2ffcrdlj7m0dp host=ec2-54-197-246-197.compute-1.amazonaws.com port=5432 user=ihtxpbixayjwqp password=lk0N0phG-frjKVxCYIEUi4U-I6 sslmode=require";
