@@ -61,15 +61,12 @@
                 $('#colors_sketch').sketch();
             }
             resizeCanvas();
-            $('#colors_sketch').sketch();
+            $('#colors_sketch').sketch(el, {defaultSize:30});
           </script>
 		  <script type='text/javascript'>
             $(function() {
               $.each(['#424F5F', '#017B90', '#CAC6C3', '#96BD3C', '#C4D525', '#FFC90B', '#FF8730', '#FA031E', '#A43C3D', '#DA4F6E', '#593C50', '#B88B52', '#FFFFFF', '#000000'], function() {
                 $('.tools').append("<a href='#colors_sketch' data-color='" + this + "' style='width: 30px; background: " + this + ";'></a> ");
-              });
-              $.each([3, 5, 10, 15], function() {
-                $('.tools').append("<a href='#colors_sketch' data-size='" + this + "' style='background: #E0E0E0'; width: 30px>" + this + "</a> ");
               });
               $('#colors_sketch').sketch();
             });
