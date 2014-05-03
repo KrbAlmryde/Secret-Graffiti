@@ -8,3 +8,15 @@ function pg_connection_string() {
 
 $db = pg_connect(pg_connection_string());
 if (!$db) echo("Couldn't connect to remote database.<br>");
+
+$result = pg_query($db, "SELECT * FROM graffiti");
+$rows = pg_fetch_all($result);
+
+print_r($rows);
+
+echo("<table>");
+
+// foreach ($rows as $row) {
+//
+// }
+echo("</table>")
