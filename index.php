@@ -16,7 +16,12 @@
                 console.log(loc);
                 $("<p>" + loc.coords.latitude + "," + loc.coords.latitude + "," + loc.coords.heading + "</p>").appendTo("body");
             }
-            navigator.geolocation.watchPosition(setLocation)
+            navigator.geolocation.watchPosition( setLocation, null, {maximumAge: 0, enableHighAccuracy: true} )
+
+        window.addEventListener('deviceorientation', function(event) {
+            var heading = event.webkitCompassHeading // + window.orientation;
+            $("<p>" + heading + "</p>").appendTo("body");
+        }, false);
         </script>
     </body>
 </html>
