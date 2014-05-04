@@ -35,7 +35,7 @@ function onCreate() {
 
 
     /**************************** SETUP PLANE ****************************/
-    var aPlane = new THREE.Mesh(new THREE.PlaneGeometry( 5000, 5000, 100, 100 ),
+    var aPlane = new THREE.Mesh(new THREE.PlaneGeometry( 1000, 1000 ),
                            new THREE.MeshBasicMaterial(
                                 {color: 0x808080,
                                  side: THREE.DoubleSide })
@@ -68,14 +68,13 @@ function onCreate() {
 
     if(Detector.webgl){
         renderer = new THREE.WebGLRenderer({antialias:true});
-        alert("We are in GL mode!!");
+        alert("In WebGL mode!!");
     // If its not supported, instantiate the canvas renderer to support all non WebGL browsers
     } else {
         renderer = new THREE.CanvasRenderer();
-        alert("We are in Canvas mode!!");
+        alert("In Canvas mode!!");
     }
 
-    // renderer = new THREE.CanvasRenderer();
     // Set the background color of the renderer to black, with full opacity
     renderer.setClearColor(0x000000, 1);
 
