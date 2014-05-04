@@ -35,7 +35,7 @@ function onCreate() {
 
 
     /**************************** SETUP PLANE ****************************/
-    var aPlane = new THREE.Mesh(new THREE.PlaneGeometry( 1000, 1000 ),
+    var aPlane = new THREE.Mesh(new THREE.PlaneGeometry( 100, 100 ),
                            new THREE.MeshBasicMaterial(
                                 {color: 0x808080,
                                  side: THREE.DoubleSide })
