@@ -3,10 +3,14 @@
     <head>
         <title>Secret Graffiti</title>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <!-- importing three.js and Detector.js libraries -->
+        <script src="../js/three.min.js"></script>
+        <script src="../js/Detector.js"></script>
 
     </head>
     <body>
         <h1>Secret Graffiti</h1>
+        <div id="container"></div>
         <a href="./draw.php"><button>Draw</button></a>
 
         <script>
@@ -23,5 +27,11 @@
             $("<p>" + heading + "</p>").appendTo("body");
         }, false);
         </script>
+
+        <!-- Running tut1.js code! -->
+        <script src="./graffitiScene.js"></script>
     </body>
+
+
 </html>
+
