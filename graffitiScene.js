@@ -124,7 +124,8 @@ function onCreate() {
 }
 
 function onFrame() {
-    camera.rotation.y = heading * (Math.PI / 180);
+    radians = heading * (Math.PI / 180);
+    if (! Number.isNaN(radians) ) camera.rotation.y = radians;
     camera.updateProjectionMatrix();
     requestAnimationFrame(onFrame);
 
