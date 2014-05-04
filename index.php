@@ -4,8 +4,8 @@
         <title>Secret Graffiti</title>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <!-- importing three.js and Detector.js libraries -->
-        <script src="../js/three.min.js"></script>
-        <script src="../js/Detector.js"></script>
+        <script src="js/three.min.js"></script>
+        <script src="js/Detector.js"></script>
 
     </head>
     <body>
