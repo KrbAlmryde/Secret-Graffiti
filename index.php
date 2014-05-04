@@ -9,20 +9,19 @@
         <h1>Secret Graffiti</h1>
         <a href="./draw.php"><button>Draw</button></a>
 
-          <script>
-              console.log("hello dudes.")
-              $.getJSON(
-                  "script.php",
-                  { foo: "Hello from JavaScript. Blah blah." }
-              )
-              .done(function(data) {
-                  console.info("Success.")
-                  console.log(data)
-              })
-              .fail(function() {
-                  console.info("AJAX didn't work.")
-              })
-          </script>
-        </div>
+        <script>
+            loc = {}
+            setLocation = function(location) {
+                loc = location;
+                console.log(loc);
+                $("<p>" + loc.coords.latitude + "," + loc.coords.latitude + "," + loc.coords.heading + "</p>").appendTo("body");
+            }
+            navigator.geolocation.watchPosition( setLocation, null, {maximumAge: 0, enableHighAccuracy: true} )
+
+        window.addEventListener('deviceorientation', function(event) {
+            var heading = event.webkitCompassHeading // + window.orientation;
+            $("<p>" + heading + "</p>").appendTo("body");
+        }, false);
+        </script>
     </body>
 </html>

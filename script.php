@@ -1,5 +1,54 @@
 <?php
 
+require_once "dropbox-sdk/Dropbox/autoload.php";
+use \Dropbox as dbx;
+$accessToken = "2pmnCeiQIlgAAAAAAAAERHyC0MgB03sTgSCouSyxj2lKwoH27DLkz7PB9ZpzXset";
+$dbxClient = new dbx\Client($accessToken, "secret-graffiti");
+
+function pg_connection_string() {
+	return "dbname=d2ffcrdlj7m0dp host=ec2-54-197-246-197.compute-1.amazonaws.com port=5432 user=ihtxpbixayjwqp password=lk0N0phG-frjKVxCYIEUi4U-I6 sslmode=require";
+}
+
+$db = pg_connect(pg_connection_string());
+if (!$db) echo("Couldn't connect to remote database.<br>");
+
+function downloadThumbById($id, $dbxClient, $size) {
+	$fileName = "./pics/" . $id . ".jpg";
+	if ( ! file_exists($fileName) ) {
+		$file = fopen($fileName, "w");
+		// $result = $dbxClient->getFile("/" . $id . ".jpg", $file);
+		list($meta, $data) = $dbxClient->getThumbnail("/" . $id . ".jpg", "jpeg", $size);
+		fwrite($file, $data);
+		fclose($file);
+	}
+}
+
+function saveGraffiti($db, $data64) {
+	$data64 = str_replace('data:image/jpeg;base64,', '', $data64);
+	$data64 = str_replace(' ','+',$data64);
+	$data = base64_decode($data64);
+
+	$result = pg_query($db, "SELECT id FROM graffiti ORDER BY id DESC LIMIT 1;");
+	$maxId = pg_fetch_result($result, "id");
+	$newId = $maxId + 1;
+
+	file_put_contents("./pics/" . $newId . ".jpg", $data);
+	// file_put_contents("./pics/test.txt", $data64);
+	// 	$dbxClient->uploadFile("/1.jpg", dbx\WriteMode::force(), $file);
+	// 	fclose($file);
+}
+
+$data64 = $_POST['imgBase64'];
+
+if ($data64) {
+	saveGraffiti($db, $data64);
+}
+
+// saveGraffiti($db);
+
+if($_GET['getBrick']) {
+	downloadThumbById("brick", $dbxClient, "xl");
+}
 // error_reporting(E_ALL);
 
 // if($_GET['bar']) {
@@ -10,14 +59,14 @@
 // 	echo json_encode($result);
 // }
 
-if($_GET['foo']) {
-	$result = array(
-		"GET variable Foo" => $_GET['foo'],
-		"PHP Replies" => "Hello from PHP",
-		"img" => "me.jpg"
-	);
-	echo json_encode($result);
-}
+// if($_GET['foo']) {
+// 	$result = array(
+// 		"GET variable Foo" => $_GET['foo'],
+// 		"PHP Replies" => "Hello from PHP",
+// 		"img" => "me.jpg"
+// 	);
+// 	echo json_encode($result);
+// }
 
 // function pg_connection_string() {
 // 	return "dbname=d2ffcrdlj7m0dp host=ec2-54-197-246-197.compute-1.amazonaws.com port=5432 user=ihtxpbixayjwqp password=lk0N0phG-frjKVxCYIEUi4U-I6 sslmode=require";

@@ -40,7 +40,7 @@
           toolLinks: true,
           defaultTool: 'marker',
           defaultColor: '#000000',
-          defaultSize: 5
+      defaultSize: 30
         }, opts);
         this.painting = false;
         this.color = this.options.defaultColor;
