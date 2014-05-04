@@ -66,15 +66,15 @@ function onCreate() {
     /***************************** SETUP RENDERER *****************************/
     // Check whether the browser supports WebGL
 
-    if(Detector.webgl){
-        renderer = new THREE.WebGLRenderer({antialias:true});
-        alert("In WebGL mode!!");
-    // If its not supported, instantiate the canvas renderer to support all non WebGL browsers
-    } else {
-        renderer = new THREE.CanvasRenderer();
-        alert("In Canvas mode!!");
-    }
-
+    // if(Detector.webgl){
+    //     renderer = new THREE.WebGLRenderer({antialias:true});
+    //     // alert("In WebGL mode!!");
+    // // If its not supported, instantiate the canvas renderer to support all non WebGL browsers
+    // } else {
+    //     renderer = new THREE.CanvasRenderer();
+    //     // alert("In Canvas mode!!");
+    // }
+    renderer = new THREE.CanvasRenderer();
     // Set the background color of the renderer to black, with full opacity
     renderer.setClearColor(0x000000, 1);
 
