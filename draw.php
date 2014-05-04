@@ -29,44 +29,24 @@
 
 
         <div class='tools'>
-            <button onclick="save" style="float: right; width: 100px; height:50px">Save</button>
+            <button id="save" onclick="save" style="float: right; width: 100px; height:50px">Save</button>
          </div>
-          <script>
-			function save() {
-				var canvas = document.getElementById('colors_sketch');
-				var dataURL = canvas.toDataURL();
-				$.ajax({
-					type: "POST",
-					url: "script.php",
-					data: {
-						imgBase64: dataURL
-					}
-				}).done(function(o) {
-					console.log('saved');
-				});
-			}
-
-
-		</script>
 
         <div class='demo'>
 <!--           <canvas id='colors_sketch' width='auto' height='auto' style="background: url(./pics/brick.jpg) no-repeat center center;"></canvas> -->
-          <script type='text/javascript'>
-
-          </script>
 		  <script type='text/javascript'>
 
             // Write the brick.jpg file
-            $.ajax({
-                type: "GET",
-                url: "script.php",
-                data: {
-                    getBrick: 1
-                }
-            }).done(function() {
-                $('div.demo').append("<canvas id='colors_sketch' width='auto' height='auto' style='background: url(./pics/brick.jpg) center center;'></canvas>");
+            $.get("script.php?getBrick=1").done(function() {
+                $("<img src='./pics/brick.jpg' id='brick' />").appendTo("body");
+                // $('div.demo').append("<canvas id='colors_sketch' width='auto' height='auto' style='background: url(./pics/brick.jpg) center center;'></canvas>");
+                $('div.demo').append("<canvas id='colors_sketch' width='auto' height='auto'></canvas>");
 
                 var canvas = document.getElementById('colors_sketch');
+
+                // var context = $("#colors_sketch")[0].getContext('2d');
+                // var image = document.getElementById("brick");
+                // context.drawImage(image, 10, 10);
 
                 // resize the canvas to fill browser window dynamically
                 window.addEventListener('resize', resizeCanvas, false);
@@ -85,6 +65,31 @@
                   });
                   $('#colors_sketch').sketch();
                 });
+
+                console.log($('button#save'));
+
+                save = function() {
+                    var canvas = document.getElementById('colors_sketch');
+                    var context = canvas.getContext('2d');
+
+                    var w = canvas.width;
+                    var h = canvas.height;
+
+                    context.globalCompositeOperation = "destination-over";
+                    context.fillStyle = "rgb(256, 256, 256)";
+                    context.fillRect(0, 0, w, h);
+
+                    var dataURL = canvas.toDataURL("image/jpeg");
+                    $.post("script.php",
+                        {
+                            imgBase64: dataURL
+                        }
+                    ).done(function(o) {
+                        console.log('saved');
+                    });
+                }
+
+                $('button#save').first().click(save);
 
             })
           </script>
