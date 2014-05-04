@@ -122,6 +122,7 @@ function onCreate() {
 }
 
 function onFrame() {
+    camera.rotation.y = heading;
     camera.updateProjectionMatrix();
     requestAnimationFrame(onFrame);
 
