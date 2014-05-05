@@ -63,8 +63,8 @@
 			</div>
 			<nav id="menu">
 				<ul id="menu-list">
-					<a href="#colors_sketch" data-tool="eraser" class="saveButton" style="margin-left:125px; background:#FFFFFF; ">Eraser</a>
-					<a href="#colors_sketch" data-tool="marker" class="saveButton" style="margin-left:15px; background: #FFFFFF">Pen</a>
+					<a href="#colors_sketch" data-tool="eraser" class="saveButton" style="margin-left:125px; background:#FFFFFF; width:54px ">Eraser</a>
+					<a href="#colors_sketch" data-tool="marker" class="saveButton" style="margin-left:15px; background: #FFFFFF; width:54px">Pen</a>
 					<p>
 					<a href='#colors_sketch' data-color='#FFFFFF' style='width: 30px; background:#FFFFFF;'></a>
 					<a href='#colors_sketch' data-color='#FBC701' style='width: 30px; background:#FBC701;'></a>
