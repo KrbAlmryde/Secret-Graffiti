@@ -35,44 +35,14 @@ function onCreate() {
 
 
     /**************************** SETUP PLANE ****************************/
-    var positions = [{x:0, y:0, z:100},
-                     {x:100, y:0, z:100},
-                     {x:-100, y:0, z:100},
-
-                     {x:0, y:0, z:0},
-                     {x:100, y:0, z:0},
-                     {x:-100, y:0, z:0},
-
-                     {x:0, y:0, z:-100},
-                     {x:100, y:0, z:-100},
-                     {x:-100, y:0, z:-100}];
-
-    for (var i = 0; i < 9; i++) {
-        var aPlane = new THREE.Mesh(new THREE.PlaneGeometry( 100, 100 ),
-                               new THREE.MeshBasicMaterial(
-                                    {color: colors[i],
-                                     side: THREE.DoubleSide} )
-                               );
-        aPlane.position.set(
-                                positions[i].x,
-                                positions[i].y,
-                                positions[i].z
-                            );
-        aPlane.rotation.x = Math.PI/2; //angles[i];
-        scene.add( aPlane );
-    }
-    /***************************** SETUP SPHERE *****************************/
-    // create the sphere's material
-    // var sphereMaterial = new THREE.MeshLambertMaterial( { color: 0xCC0000 } );
-
-    // // set up the sphere vars
-    // var radius = 50, segments = 16, rings = 16;
-
-    // // create a new mesh with sphere geometry -
-    // // we will cover the sphereMaterial next!
-    // var sphere = new THREE.Mesh(new THREE.SphereGeometry(radius, segments, rings),sphereMaterial);
-    // sphere.position.x = 0;
-    // scene.add(sphere);
+    var aPlane = new THREE.Mesh(new THREE.PlaneGeometry( 100, 100 ),
+                           new THREE.MeshBasicMaterial(
+                                {color: 0x808080,
+                                 side: THREE.DoubleSide })
+                           );
+    aPlane.position.set(0,0,0);
+    aPlane.rotation.x = Math.PI/2; //angles[i];
+    scene.add( aPlane );
 
     /***************************** SETUP IMAGE(S) *****************************/
       // material
@@ -95,15 +65,16 @@ function onCreate() {
 
     /***************************** SETUP RENDERER *****************************/
     // Check whether the browser supports WebGL
+
     // if(Detector.webgl){
     //     renderer = new THREE.WebGLRenderer({antialias:true});
+    //     // alert("In WebGL mode!!");
     // // If its not supported, instantiate the canvas renderer to support all non WebGL browsers
     // } else {
     //     renderer = new THREE.CanvasRenderer();
+    //     // alert("In Canvas mode!!");
     // }
-
     renderer = new THREE.CanvasRenderer();
-
     // Set the background color of the renderer to black, with full opacity
     renderer.setClearColor(0x000000, 1);
 
@@ -168,11 +139,12 @@ function onWindowResize() {
 }
 
 
-function checkKey(e) {
 
-    e = e || window.event;
+function checkKey(event) {
 
-    switch(e.keyCode){
+    event = event || window.event;
+
+    switch(event.keyCode){
         case 104:
             camera.position.z -= 1;
             console.log("8/camera.position.z: ",camera.position.z);
