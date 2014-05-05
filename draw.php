@@ -16,6 +16,8 @@
         <style type='text/css'>
             html, body {
                 overflow: hidden;
+				height:100%; 
+				width:100%; 
             }
 
             simple_sketch {
@@ -52,7 +54,7 @@
 
     </head>
     <body>
-		<div>
+		<div style="height:100% width:100%">
 			<div id="header" style="overflow: auto">
 				<button class="saveButton"id="save" onclick="save" style="float:right">Save</button>
 				<a href="#menu"></a>
@@ -61,51 +63,43 @@
 			</div>
 			<nav id="menu">
 				<ul id="menu-list">
-					<a href="#colors_sketch" data-tool="eraser" class="saveButton" style="margin-left:125px; ">Eraser</a>
-					<a href="#colors_sketch" data-tool="marker" class="saveButton" style="margin-left:15px">Pen</a>
+					<a href="#colors_sketch" data-tool="eraser" class="saveButton" style="margin-left:125px; background:#FFFFFF; ">Eraser</a>
+					<a href="#colors_sketch" data-tool="marker" class="saveButton" style="margin-left:15px; background: #FFFFFF">Pen</a>
 					<p>
 					<a href='#colors_sketch' data-color='#FFFFFF' style='width: 30px; background:#FFFFFF;'></a>
 					<a href='#colors_sketch' data-color='#FBC701' style='width: 30px; background:#FBC701;'></a>
 					<a href='#colors_sketch' data-color='#F99F00' style='width: 30px; background:#F99F00;'></a>
+					<a href='#colors_sketch' data-color='#D98000' style='width: 30px; background:#D98000;'></a>
 					<a href='#colors_sketch' data-color='#F88601' style='width: 30px; background:#F88601;'></a>
 					<a href='#colors_sketch' data-color='#F43101' style='width: 30px; background:#F43101;'></a>
 					<a href='#colors_sketch' data-color='#EC0500' style='width: 30px; background:#EC0500;'></a>
-					<a href='#colors_sketch' data-color='#FACC98' style='width: 30px; background:#FACC98;'></a>
-					<a href='#colors_sketch' data-color='#D98000' style='width: 30px; background:#D98000;'></a>
-					<a href='#colors_sketch' data-color='#BC834E' style='width: 30px; background:#BC834E;'></a>
-					<a href='#colors_sketch' data-color='#C10400' style='width: 30px; background:#C10400;'></a>
-					<a href='#colors_sketch' data-color='#820201' style='width: 30px; background:#820201;'></a>
 					
-					<a href='#colors_sketch' data-color='#230100' style='width: 30px; background:#230100;'></a>
-					<a href='#colors_sketch' data-color='#501A0E' style='width: 30px; background:#501A0E;'></a>
+					
 					<a href='#colors_sketch' data-color='#F6D4AF' style='width: 30px; background:#F6D4AF;'></a>
 					<a href='#colors_sketch' data-color='#FB9D91' style='width: 30px; background:#FB9D91;'></a>
 					<a href='#colors_sketch' data-color='#F96887' style='width: 30px; background:#F96887;'></a>
 					<a href='#colors_sketch' data-color='#F51877' style='width: 30px; background:#F51877;'></a>
-					<a href='#colors_sketch' data-color='#0A4100' style='width: 30px; background:#0A4100;'></a>
-					<a href='#colors_sketch' data-color='#185700' style='width: 30px; background:#185700;'></a>
-					<a href='#colors_sketch' data-color='#2EA700' style='width: 30px; background:#2EA700;'></a>
-					<a href='#colors_sketch' data-color='#C78DDA' style='width: 30px; background:#C78DDA;'></a>
 					<a href='#colors_sketch' data-color='#DB0B6B' style='width: 30px; background:#DB0B6B;'></a>
-					
+					<a href='#colors_sketch' data-color='#C78DDA' style='width: 30px; background:#C78DDA;'></a>
 					<a href='#colors_sketch' data-color='#710237' style='width: 30px; background:#710237;'></a>
+					
+					
+					<a href='#colors_sketch' data-color='#185700' style='width: 30px; background:#185700;'></a>
+					
 					<a href='#colors_sketch' data-color='#2B826F' style='width: 30px; background:#2B826F;'></a>
 					<a href='#colors_sketch' data-color='#259525' style='width: 30px; background:#259525;'></a>
 					<a href='#colors_sketch' data-color='#75DF9D' style='width: 30px; background:#75DF9D;'></a>
 					<a href='#colors_sketch' data-color='#011F53' style='width: 30px; background:#011F53;'></a>
-					<a href='#colors_sketch' data-color='#0C0B57' style='width: 30px; background:#0C0B57;'></a>
+					
 					<a href='#colors_sketch' data-color='#37034B' style='width: 30px; background:#37034B;'></a>
 					<a href='#colors_sketch' data-color='#289173' style='width: 30px; background:#289173;'></a>
 					<a href='#colors_sketch' data-color='#A7E7D7' style='width: 30px; background:#A7E7D7;'></a>
 					<a href='#colors_sketch' data-color='#6BC4E6' style='width: 30px; background:#6BC4E6;'></a>
 					<a href='#colors_sketch' data-color='#2A8ECC' style='width: 30px; background:#2A8ECC;'></a>
 					<a href='#colors_sketch' data-color='#2267A8' style='width: 30px; background:#2267A8;'></a>
+					
 					<a href='#colors_sketch' data-color='#011A81' style='width: 30px; background:#011A81;'></a>
 					<a href='#colors_sketch' data-color='#000000' style='width: 30px; background:#000000;'></a>
-					<a href='#colors_sketch' data-color='#B3A9A0' style='width: 30px; background:#B3A9A0;'></a>
-					<a href='#colors_sketch' data-color='#9B969A' style='width: 30px; background:#9B969A;'></a>
-					<a href='#colors_sketch' data-color='#9B969A' style='width: 30px; background:#9B969A;'></a>
-					<a href='#colors_sketch' data-color='#C25707' style='width: 30px; background:#C25707;'></a>
 					</p>
 					<p>
 					<a href='#colors_sketch' data-size='5' style='width: 30px; background:#FFFFFF;'>5</a>
