@@ -7,6 +7,8 @@ var image;
 var images; // This is in anticipation for an array of images
 
 var colors = [0xFF0000, 0x00FF00, 0x0000FF, 0x00FFFF, 0xFF0000, 0x00FF00, 0x0000FF, 0x00FFFF, 0x808080];
+var radians;
+
 
 onCreate();
 onFrame();
@@ -35,14 +37,32 @@ function onCreate() {
 
 
     /**************************** SETUP PLANE ****************************/
-    var aPlane = new THREE.Mesh(new THREE.PlaneGeometry( 100, 100 ),
-                           new THREE.MeshBasicMaterial(
-                                {color: 0x808080,
-                                 side: THREE.DoubleSide })
-                           );
-    aPlane.position.set(0,0,0);
-    aPlane.rotation.x = Math.PI/2; //angles[i];
-    scene.add( aPlane );
+    var positions = [{x:0, y:0, z:100},
+                     {x:100, y:0, z:100},
+                     {x:-100, y:0, z:100},
+
+                     {x:0, y:0, z:0},
+                     {x:100, y:0, z:0},
+                     {x:-100, y:0, z:0},
+
+                     {x:0, y:0, z:-100},
+                     {x:100, y:0, z:-100},
+                     {x:-100, y:0, z:-100}];
+
+    for (var i = 0; i < 9; i++) {
+        var aPlane = new THREE.Mesh(new THREE.PlaneGeometry( 100, 100 ),
+                               new THREE.MeshBasicMaterial(
+                                    {color: colors[i],
+                                     side: THREE.DoubleSide} )
+                               );
+        aPlane.position.set(
+                                positions[i].x,
+                                positions[i].y,
+                                positions[i].z
+                            );
+        aPlane.rotation.x = Math.PI/2; //angles[i];
+        scene.add( aPlane );
+    }
 
     /***************************** SETUP IMAGE(S) *****************************/
       // material
@@ -74,7 +94,9 @@ function onCreate() {
     //     renderer = new THREE.CanvasRenderer();
     //     // alert("In Canvas mode!!");
     // }
+
     renderer = new THREE.CanvasRenderer();
+    
     // Set the background color of the renderer to black, with full opacity
     renderer.setClearColor(0x000000, 1);
 
@@ -85,7 +107,6 @@ function onCreate() {
     var container = $('#container');
 
     // attach the render-supplied DOM element
-    // container.keydown(checkKey);
     window.addEventListener('keydown', checkKey, false);
     window.addEventListener( 'resize', onWindowResize, false );
 
