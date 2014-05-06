@@ -142,11 +142,11 @@ function test() {
     requestAnimationFrame(test)
 
     radians = heading * (Math.PI / 180)
-    if (! Number.isNaN(radians) ) camera.rotation.y = radians;
+    // if (! Number.isNaN(radians) ) camera.rotation.y = radians;
 
     $("p#heading").text(heading)
     $("p#rotation").text(radians)
-    // $("p#camera").text(camera.rotation.y)
+    $("p#camera").text(camera.rotation.y)
 
     renderer.render(scene, camera);
 }
