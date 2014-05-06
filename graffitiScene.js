@@ -143,8 +143,9 @@ function test() {
 
     radians = heading * (Math.PI / 180)
     // if (! Number.isNaN(radians) ) camera.rotation.y = radians;
+    camera.rotation.y = radians;
 
-    camera.rotation.y = 1;
+    // camera.rotation.y = 1;
 
     $("p#heading").text(heading)
     $("p#rotation").text(radians)
