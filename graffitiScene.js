@@ -132,10 +132,15 @@ function onCreate() {
 
     $(window).load(renderScene);
 
-    onFrame();
+    test();
+    // onFrame();
 }
 
 var heading = 10
+
+function test() {
+    $("p#heading").text("testing one two")
+}
 
 function onFrame() {
     heading = Math.random() * 360;
@@ -143,7 +148,7 @@ function onFrame() {
     if (! Number.isNaN(radians) ) camera.rotation.y = radians;
 
     $("p#heading").text("does this work")
-    $("p#heading").text(heading);
+    // $("p#heading").text(heading);
     $("p#rotation").text(radians);
 
     camera.updateProjectionMatrix();
