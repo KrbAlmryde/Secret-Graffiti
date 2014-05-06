@@ -1,7 +1,7 @@
 // Update location and heading
 
-loc = {}
-heading = {}
+var loc = {}
+var heading = {}
 setLocation = function(location) {
     loc = location;
     console.log(loc);
