@@ -9,9 +9,9 @@ setLocation = function(location) {
 }
 navigator.geolocation.watchPosition( setLocation, null, {maximumAge: 0, enableHighAccuracy: true} )
 
-window.addEventListener('deviceorientation', function(event) {
+window.addEventListener('deviceorientation', function(e) {
     // heading = event.compassHeading || event.webkitCompassHeading || 0;
-    heading = event.webkitCompassHeading;
+    heading = e.webkitCompassHeading;
     // $("p#heading").text(heading);
 }, false);
 
@@ -137,6 +137,7 @@ function onFrame() {
     radians = heading * (Math.PI / 180);
     if (! Number.isNaN(radians) ) camera.rotation.y = radians;
 
+    $("p#heading").text("does this work")
     $("p#heading").text(heading);
     $("p#rotation").text(radians);
 
