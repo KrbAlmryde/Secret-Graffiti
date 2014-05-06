@@ -134,48 +134,39 @@ function onCreate() {
 
     $(window).load(renderScene);
 
-    test();
-    // onFrame();
+    onFrame();
 }
 
-function test() {
+function onFrame() {
     requestAnimationFrame(test)
 
     radians = heading * (Math.PI / 180)
 
     if (! isNaN(radians) ) camera.rotation.y = -radians
 
-    // camera.rotation.y = radians;
-
-    // camera.rotation.y = 1;
-
-    $("p#heading").text(heading)
-    $("p#rotation").text(radians)
-    $("p#camera").text(camera.rotation.y)
-
     renderer.render(scene, camera);
 }
 
-function onFrame() {
-    heading = Math.random() * 360;
-    radians = heading * (Math.PI / 180);
-    if (! Number.isNaN(radians) ) camera.rotation.y = radians;
-
-    $("p#heading").text("does this work")
-    // $("p#heading").text(heading);
-    $("p#rotation").text(radians);
-
-    camera.updateProjectionMatrix();
-
-    // window.requestAnimationFrame(onFrame);
-
-    // draw!
-    renderScene();
-}
-
-function renderScene() {
-    renderer.render(scene, camera);
-}
+// function onFrame() {
+//     heading = Math.random() * 360;
+//     radians = heading * (Math.PI / 180);
+//     if (! Number.isNaN(radians) ) camera.rotation.y = radians;
+//
+//     $("p#heading").text("does this work")
+//     // $("p#heading").text(heading);
+//     $("p#rotation").text(radians);
+//
+//     camera.updateProjectionMatrix();
+//
+//     // window.requestAnimationFrame(onFrame);
+//
+//     // draw!
+//     renderScene();
+// }
+//
+// function renderScene() {
+//     renderer.render(scene, camera);
+// }
 
 function randCoord() {
   return Math.floor(Math.random() * (100 - -100 + 1)) + -100;
