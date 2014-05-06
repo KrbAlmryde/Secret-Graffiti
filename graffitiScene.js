@@ -146,7 +146,7 @@ function test() {
 
     $("p#heading").text(heading)
     $("p#rotation").text(radians)
-    $("p#camera").text(camera.rotation.y)
+    // $("p#camera").text(camera.rotation.y)
 
     renderer.render(scene, camera);
 }
