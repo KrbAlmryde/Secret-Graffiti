@@ -10,6 +10,7 @@
     </head>
     <body>
         <h1>Secret Graffiti</h1>
+        <p id="heading">heading goes here</p>
         <div id="container"></div>
         <a href="./draw.php"><button>Draw</button></a>
 
@@ -26,7 +27,7 @@
 
             window.addEventListener('deviceorientation', function(event) {
                 heading = event.compassHeading || event.webkitCompassHeading || 0;
-                $("<p>" + heading + "</p>").appendTo("body");
+                $("p#heading").text(heading);
             }, false);
 
         </script>
