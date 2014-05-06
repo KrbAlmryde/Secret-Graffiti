@@ -134,7 +134,8 @@ function onCreate() {
 
     $(window).load(renderScene);
 
-    test();
+    onFrame();
+    // onFrame();
 }
 
 function onFrame() {
@@ -163,10 +164,10 @@ function onFrame() {
 //     // draw!
 //     renderScene();
 // }
-//
-// function renderScene() {
-//     renderer.render(scene, camera);
-// }
+
+function renderScene() {
+    renderer.render(scene, camera);
+}
 
 function randCoord() {
   return Math.floor(Math.random() * (100 - -100 + 1)) + -100;
