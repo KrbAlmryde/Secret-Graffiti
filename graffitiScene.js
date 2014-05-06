@@ -145,6 +145,8 @@ function test() {
     $("p#heading").text(heading)
     $("p#rotation").text(radians)
 
+    renderScene();
+
     requestAnimationFrame(test)
 }
 
