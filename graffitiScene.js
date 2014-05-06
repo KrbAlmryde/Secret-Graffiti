@@ -142,8 +142,10 @@ function test() {
     requestAnimationFrame(test)
 
     radians = heading * (Math.PI / 180)
-    // if (! Number.isNaN(radians) ) camera.rotation.y = radians;
-    camera.rotation.y = radians;
+
+    if (! isNaN(radians) ) camera.rotation.y = radians
+    
+    // camera.rotation.y = radians;
 
     // camera.rotation.y = 1;
 
