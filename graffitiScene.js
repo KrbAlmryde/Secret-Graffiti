@@ -1,7 +1,7 @@
 // Update location and heading
 
 var loc = {}
-var heading = 10
+
 setLocation = function(location) {
     loc = location;
     console.log(loc);
@@ -133,8 +133,10 @@ function onCreate() {
     $(window).load(renderScene);
 }
 
-function onFrame() {
+var heading = 10
 
+function onFrame() {
+    heading = Math.random() * 360;
     radians = heading * (Math.PI / 180);
     if (! Number.isNaN(radians) ) camera.rotation.y = radians;
 
