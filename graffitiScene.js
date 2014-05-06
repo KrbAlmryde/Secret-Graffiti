@@ -133,13 +133,14 @@ function onCreate() {
     $(window).load(renderScene);
 
     test();
-    // onFrame();
+    onFrame();
 }
 
 var heading = 10
 
 function test() {
     $("p#heading").text(heading)
+    requestAnimationFrame(test);
 }
 
 function onFrame() {
@@ -153,7 +154,7 @@ function onFrame() {
 
     camera.updateProjectionMatrix();
 
-    requestAnimationFrame(onFrame);
+    // window.requestAnimationFrame(onFrame);
 
     // draw!
     renderScene();
