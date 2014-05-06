@@ -32,7 +32,8 @@ function onCreate() {
     camera.position.set(0,2,0);
     // camera.lookAt(scene.position);
     // camera.lookAt(new THREE.Vector3(0,2,0));
-    camera.lookAt(camera.position);
+    // camera.lookAt(new THREE.Vector3(0,0,1));
+    console.log(camera.position)
     scene.add(camera);
 
 
@@ -106,8 +107,8 @@ function onCreate() {
     var container = $('#container');
 
     // attach the render-supplied DOM element
-    window.addEventListener('keydown', checkKey, false);
-    window.addEventListener( 'resize', onWindowResize, false );
+    // window.addEventListener('keydown', checkKey, false);
+    // window.addEventListener( 'resize', onWindowResize, false );
 
     container.append(renderer.domElement);
 
