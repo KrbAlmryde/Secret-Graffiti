@@ -2,6 +2,8 @@
 
 var loc = {}
 
+var heading = 10
+
 setLocation = function(location) {
     loc = location;
     console.log(loc);
@@ -132,11 +134,9 @@ function onCreate() {
 
     $(window).load(renderScene);
 
-    // test();
-    onFrame();
+    test();
+    // onFrame();
 }
-
-var heading = 10
 
 function test() {
     $("p#heading").text(heading)
