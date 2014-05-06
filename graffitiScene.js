@@ -1,7 +1,7 @@
 // Update location and heading
 
 var loc = {}
-var heading = {}
+var heading = 10
 setLocation = function(location) {
     loc = location;
     console.log(loc);
@@ -16,7 +16,7 @@ window.addEventListener('deviceorientation', function(event) {
 }, false);
 
 window.addEventListener('deviceorientation', function(event) {
-    $("p#heading").text(heading);
+    // $("p#heading").text(heading);
 }, false);
 
 
@@ -55,7 +55,7 @@ function onCreate() {
     // camera.lookAt(scene.position);
     // camera.lookAt(new THREE.Vector3(0,2,0));
     // camera.lookAt(new THREE.Vector3(0,0,1));
-    console.log(camera.position)
+    // console.log(camera.position)
     scene.add(camera);
 
 
@@ -146,6 +146,7 @@ function onFrame() {
     $("p#rotation").text(radians);
 
     camera.updateProjectionMatrix();
+
     requestAnimationFrame(onFrame);
 
     // draw!
