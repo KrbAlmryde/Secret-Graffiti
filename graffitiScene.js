@@ -11,8 +11,8 @@ navigator.geolocation.watchPosition( setLocation, null, {maximumAge: 0, enableHi
 
 window.addEventListener('deviceorientation', function(e) {
     // heading = event.compassHeading || event.webkitCompassHeading || 0;
-    // heading = e.webkitCompassHeading;
-    heading = 20
+    heading = e.webkitCompassHeading;
+    // heading = 20
     // $("p#heading").text(heading);
 }, false);
 
@@ -132,7 +132,7 @@ function onCreate() {
 
     $(window).load(renderScene);
 
-    test();
+    // test();
     onFrame();
 }
 
