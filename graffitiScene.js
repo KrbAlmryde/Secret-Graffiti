@@ -31,11 +31,6 @@ var images; // This is in anticipation for an array of images
 var colors = [0xFF0000, 0x00FF00, 0x0000FF, 0x00FFFF, 0xFF0000, 0x00FF00, 0x0000FF, 0x00FFFF, 0x808080];
 var radians;
 
-
-onCreate();
-onFrame();
-
-
 /*******************************************************************************/
 /***************************** FUNCTION DEFINITION *****************************/
 /*******************************************************************************/
@@ -296,3 +291,6 @@ function checkKey(event) {
 
 
 }
+
+onCreate();
+onFrame();
