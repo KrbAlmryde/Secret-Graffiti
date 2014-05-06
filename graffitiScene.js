@@ -134,11 +134,11 @@ function onCreate() {
 
     $(window).load(renderScene);
 
-    onFrame();
+    test();
 }
 
 function onFrame() {
-    requestAnimationFrame(test)
+    requestAnimationFrame(onFrame)
 
     radians = heading * (Math.PI / 180)
 
