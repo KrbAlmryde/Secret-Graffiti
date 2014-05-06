@@ -131,6 +131,8 @@ function onCreate() {
     container.append(renderer.domElement);
 
     $(window).load(renderScene);
+
+    onFrame();
 }
 
 var heading = 10
@@ -185,8 +187,6 @@ function onWindowResize() {
     renderer.setSize( window.innerWidth, window.innerHeight );
     renderScene();
 }
-
-
 
 function checkKey(event) {
 
@@ -297,4 +297,4 @@ function checkKey(event) {
 }
 
 onCreate();
-onFrame();
+// onFrame();
