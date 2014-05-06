@@ -12,6 +12,7 @@
         <h1>Secret Graffiti</h1>
         <p id="heading">heading goes here</p>
         <p id="rotation">rotation goes here</p>
+        <p id="camera">camera goes here</p>
         <div id="container"></div>
         <a href="./draw.php"><button>Draw</button></a>
 
