@@ -17,19 +17,19 @@
 
         <script>
 
-            loc = {}
-            heading = {}
-            setLocation = function(location) {
-                loc = location;
-                console.log(loc);
-                // $("<p>" + loc.coords.latitude + "," + loc.coords.latitude + "," + loc.coords.heading + "</p>").appendTo("body");
-            }
-            navigator.geolocation.watchPosition( setLocation, null, {maximumAge: 0, enableHighAccuracy: true} )
-
-            window.addEventListener('deviceorientation', function(event) {
-                heading = event.compassHeading || event.webkitCompassHeading || 0;
-                $("p#heading").text(heading);
-            }, false);
+            // loc = {}
+            // heading = {}
+            // setLocation = function(location) {
+            //     loc = location;
+            //     console.log(loc);
+            //     // $("<p>" + loc.coords.latitude + "," + loc.coords.latitude + "," + loc.coords.heading + "</p>").appendTo("body");
+            // }
+            // navigator.geolocation.watchPosition( setLocation, null, {maximumAge: 0, enableHighAccuracy: true} )
+            //
+            // window.addEventListener('deviceorientation', function(event) {
+            //     heading = event.compassHeading || event.webkitCompassHeading || 0;
+            //     $("p#heading").text(heading);
+            // }, false);
 
         </script>
 

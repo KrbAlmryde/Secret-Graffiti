@@ -1,3 +1,20 @@
+// Update location and heading
+
+loc = {}
+heading = {}
+setLocation = function(location) {
+    loc = location;
+    console.log(loc);
+    // $("<p>" + loc.coords.latitude + "," + loc.coords.latitude + "," + loc.coords.heading + "</p>").appendTo("body");
+}
+navigator.geolocation.watchPosition( setLocation, null, {maximumAge: 0, enableHighAccuracy: true} )
+
+window.addEventListener('deviceorientation', function(event) {
+    heading = event.compassHeading || event.webkitCompassHeading || 0;
+    // $("p#heading").text(heading);
+}, false);
+
+
 // create a WebGL renderer, camera and a scene
 var renderer;
 var camera;
@@ -116,9 +133,11 @@ function onCreate() {
 }
 
 function onFrame() {
+
     radians = heading * (Math.PI / 180);
     if (! Number.isNaN(radians) ) camera.rotation.y = radians;
 
+    $("p#heading").text(heading);
     $("p#rotation").text(radians);
 
     camera.updateProjectionMatrix();
