@@ -139,7 +139,7 @@ function onCreate() {
 var heading = 10
 
 function test() {
-    $("p#heading").text("testing one two")
+    $("p#heading").text(heading)
 }
 
 function onFrame() {
