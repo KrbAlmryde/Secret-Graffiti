@@ -140,7 +140,7 @@ function onCreate() {
 
 function test() {
     $("p#heading").text(heading)
-    requestAnimationFrame(test);
+    // requestAnimationFrame(test);
 }
 
 function onFrame() {
