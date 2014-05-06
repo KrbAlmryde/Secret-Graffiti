@@ -14,6 +14,7 @@
         <a href="./draw.php"><button>Draw</button></a>
 
         <script>
+
             loc = {}
             heading = {}
             setLocation = function(location) {
@@ -23,14 +24,13 @@
             }
             navigator.geolocation.watchPosition( setLocation, null, {maximumAge: 0, enableHighAccuracy: true} )
 
-        window.addEventListener('deviceorientation', function(event) {
-            heading = event.compassHeading || event.webkitCompassHeading || 0;
-            // $("<p>" + heading + "</p>").appendTo("body");
-        }, false);
+            window.addEventListener('deviceorientation', function(event) {
+                heading = event.compassHeading || event.webkitCompassHeading || 0;
+                $("<p>" + heading + "</p>").appendTo("body");
+            }, false);
 
         </script>
 
-        <!-- Running tut1.js code! -->
         <script src="./graffitiScene.js"></script>
     </body>
 
