@@ -139,8 +139,13 @@ function onCreate() {
 }
 
 function test() {
+
+    radians = heading * (Math.PI / 180)
+
     $("p#heading").text(heading)
-    // requestAnimationFrame(test);
+    $("p#rotation").text(radians)
+
+    requestAnimationFrame(test)
 }
 
 function onFrame() {
