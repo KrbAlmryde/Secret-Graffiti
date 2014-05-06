@@ -37,32 +37,32 @@ function onCreate() {
 
 
     /**************************** SETUP PLANE ****************************/
-    var positions = [{x:0, y:0, z:100},
-                     {x:100, y:0, z:100},
-                     {x:-100, y:0, z:100},
-
-                     {x:0, y:0, z:0},
-                     {x:100, y:0, z:0},
-                     {x:-100, y:0, z:0},
-
-                     {x:0, y:0, z:-100},
-                     {x:100, y:0, z:-100},
-                     {x:-100, y:0, z:-100}];
-
-    for (var i = 0; i < 9; i++) {
-        var aPlane = new THREE.Mesh(new THREE.PlaneGeometry( 100, 100 ),
-                               new THREE.MeshBasicMaterial(
-                                    {color: colors[i],
-                                     side: THREE.DoubleSide} )
-                               );
-        aPlane.position.set(
-                                positions[i].x,
-                                positions[i].y,
-                                positions[i].z
-                            );
-        aPlane.rotation.x = Math.PI/2; //angles[i];
-        scene.add( aPlane );
-    }
+    // var positions = [{x:0, y:0, z:100},
+    //                  {x:100, y:0, z:100},
+    //                  {x:-100, y:0, z:100},
+    //
+    //                  {x:0, y:0, z:0},
+    //                  {x:100, y:0, z:0},
+    //                  {x:-100, y:0, z:0},
+    //
+    //                  {x:0, y:0, z:-100},
+    //                  {x:100, y:0, z:-100},
+    //                  {x:-100, y:0, z:-100}];
+    //
+    // for (var i = 0; i < 9; i++) {
+    //     var aPlane = new THREE.Mesh(new THREE.PlaneGeometry( 100, 100 ),
+    //                            new THREE.MeshBasicMaterial(
+    //                                 {color: colors[i],
+    //                                  side: THREE.DoubleSide} )
+    //                            );
+    //     aPlane.position.set(
+    //                             positions[i].x,
+    //                             positions[i].y,
+    //                             positions[i].z
+    //                         );
+    //     aPlane.rotation.x = Math.PI/2; //angles[i];
+    //     scene.add( aPlane );
+    // }
 
     /***************************** SETUP IMAGE(S) *****************************/
       // material
