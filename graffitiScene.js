@@ -10,8 +10,13 @@ setLocation = function(location) {
 navigator.geolocation.watchPosition( setLocation, null, {maximumAge: 0, enableHighAccuracy: true} )
 
 window.addEventListener('deviceorientation', function(event) {
-    heading = event.compassHeading || event.webkitCompassHeading || 0;
+    // heading = event.compassHeading || event.webkitCompassHeading || 0;
+    heading = event.webkitCompassHeading;
     // $("p#heading").text(heading);
+}, false);
+
+window.addEventListener('deviceorientation', function(event) {
+    $("p#heading").text(heading);
 }, false);
 
 
