@@ -26,6 +26,9 @@ pg_query($db, "UPDATE graffiti SET alpha = 193.76 WHERE id = 1;");
 pg_query($db, "UPDATE graffiti SET alpha = 34.6 WHERE id = 2;");
 pg_query($db, "UPDATE graffiti SET lat = 54 WHERE id = 1;");
 //
+
+// pg_query($db, "DELETE FROM graffiti WHERE id = 5");
+
 $result = pg_query($db, "SELECT * FROM graffiti");
 $rows = pg_fetch_all($result);
 $num_fields = array_fill(0, pg_num_fields($result), '0');
@@ -59,7 +62,7 @@ foreach ($rows as $row) {
 		echo("<td>" . $field . "</td>");
 	}
 	downloadThumbById($id, $dbxClient, "m");
-	echo("<td><img src='pics/" . $id . ".jpg' /></td>");
+	echo("<td><img src='pics/" . $id . ".jpg' width='200' /></td>");
 	echo("</tr>");
 }
 echo("</tbody>");

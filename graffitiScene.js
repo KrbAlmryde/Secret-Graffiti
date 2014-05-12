@@ -1,26 +1,26 @@
 // Update location and heading
 
-var loc = {}
-
-var heading = 10
-
-setLocation = function(location) {
-    loc = location;
-    console.log(loc);
-    // $("<p>" + loc.coords.latitude + "," + loc.coords.latitude + "," + loc.coords.heading + "</p>").appendTo("body");
-}
-navigator.geolocation.watchPosition( setLocation, null, {maximumAge: 0, enableHighAccuracy: true} )
-
-window.addEventListener('deviceorientation', function(e) {
-    // heading = event.compassHeading || event.webkitCompassHeading || 0;
-    heading = e.webkitCompassHeading;
-    // heading = 20
-    // $("p#heading").text(heading);
-}, false);
-
-window.addEventListener('deviceorientation', function(event) {
-    // $("p#heading").text(heading);
-}, false);
+// var loc = {}
+//
+// var heading = 10
+//
+// setLocation = function(location) {
+//     loc = location;
+//     console.log(loc);
+//     // $("<p>" + loc.coords.latitude + "," + loc.coords.latitude + "," + loc.coords.heading + "</p>").appendTo("body");
+// }
+// navigator.geolocation.watchPosition( setLocation, null, {maximumAge: 0, enableHighAccuracy: true} )
+//
+// window.addEventListener('deviceorientation', function(e) {
+//     // heading = event.compassHeading || event.webkitCompassHeading || 0;
+//     heading = e.webkitCompassHeading;
+//     // heading = 20
+//     // $("p#heading").text(heading);
+// }, false);
+//
+// window.addEventListener('deviceorientation', function(event) {
+//     // $("p#heading").text(heading);
+// }, false);
 
 
 // create a WebGL renderer, camera and a scene

@@ -14,7 +14,12 @@
         <p id="rotation">rotation goes here</p>
         <p id="camera">camera goes here</p>
         <div id="container"></div>
-        <a href="./draw.php"><button>Draw</button></a>
+        <form action="./draw.php" method="post">
+            <input name="lat" type="hidden" value="null">
+            <input name="lng" type="hidden" value="null">
+            <input name="heading" type="hidden" value="null">
+            <input type="submit" value="Draw">
+        </form>
 
         <script>
 
@@ -31,6 +36,27 @@
             //     heading = event.compassHeading || event.webkitCompassHeading || 0;
             //     $("p#heading").text(heading);
             // }, false);
+
+            var loc = {}
+
+            var heading = 0
+
+            setLocation = function(location) {
+                loc = location;
+                console.log(loc.coords.latitude);
+                $("input[name='lat']").val(loc.coords.latitude);
+                $("input[name='lng']").val(loc.coords.longitude);
+                // $("<p>" + loc.coords.latitude + "," + loc.coords.latitude + "," + loc.coords.heading + "</p>").appendTo("body");
+            }
+            navigator.geolocation.watchPosition( setLocation, null, {maximumAge: 0, enableHighAccuracy: true} )
+
+            window.addEventListener('deviceorientation', function(e) {
+                // heading = event.compassHeading || event.webkitCompassHeading || 0;
+                heading = e.webkitCompassHeading;
+                $("input[name='heading']").val(heading);
+                // heading = 20
+                // $("p#heading").text(heading);
+            }, false);
 
         </script>
 
