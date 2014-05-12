@@ -111,6 +111,7 @@ function onCreate() {
     container.append(renderer.domElement);
 
     $(window).load(renderScene);
+    onFrame()l
 }
 
 function onFrame() {
