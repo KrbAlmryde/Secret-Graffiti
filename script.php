@@ -84,6 +84,19 @@ if ($data64) {
 	// pg_query($db, "SELECT id FROM graffiti ORDER BY id DESC LIMIT 1;");
 }
 
+if($_GET['getNearby']) {
+	$result = pg_query($db, "SELECT * FROM graffiti;");
+	$rows = pg_fetch_all($result);
+
+	foreach ($rows as $row) {
+		$id = $row["id"];
+		downloadThumbById($id, $dbxClient, "m");
+	}
+
+	echo json_encode($rows);
+	// echo json_encode("test");
+}
+
 // saveGraffiti($db);
 
 if($_GET['getBrick']) {

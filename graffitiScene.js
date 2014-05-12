@@ -1,27 +1,50 @@
 // Update location and heading
 
-// var loc = {}
-//
-// var heading = 10
-//
-// setLocation = function(location) {
-//     loc = location;
-//     console.log(loc);
-//     // $("<p>" + loc.coords.latitude + "," + loc.coords.latitude + "," + loc.coords.heading + "</p>").appendTo("body");
-// }
-// navigator.geolocation.watchPosition( setLocation, null, {maximumAge: 0, enableHighAccuracy: true} )
-//
-// window.addEventListener('deviceorientation', function(e) {
-//     // heading = event.compassHeading || event.webkitCompassHeading || 0;
-//     heading = e.webkitCompassHeading;
-//     // heading = 20
-//     // $("p#heading").text(heading);
-// }, false);
-//
-// window.addEventListener('deviceorientation', function(event) {
-//     // $("p#heading").text(heading);
-// }, false);
+var loc = {}
+var heading = 0
+var graffitiArray = []
+var initFlag = 0
 
+locationHandler = function(location) {
+
+    loc = location;
+
+    $.getJSON("script.php", { getNearby: 1 })
+        .done(function(result) {
+            console.log("done");
+            graffitiArray = result;
+            console.info(graffitiArray);
+            if (initFlag === 0) {
+                initFlag = 1;
+                onCreate();
+            }
+        })
+
+    // $.getJSON("script.php", { getNearby: 1 })
+    //     .done(function(result) {
+    //         graffitiArray = result;
+    //         console.info(graffitiArray);
+    //         if (initFlag === 0) {
+    //             initFlag = 1;
+    //             onCreate();
+    //         }
+    //     })
+
+    // console.log(loc.coords.latitude);
+    $("input[name='lat']").val(loc.coords.latitude);
+    $("input[name='lng']").val(loc.coords.longitude);
+    // $("<p>" + loc.coords.latitude + "," + loc.coords.latitude + "," + loc.coords.heading + "</p>").appendTo("body");
+}
+
+navigator.geolocation.watchPosition( locationHandler, null, {maximumAge: 0, enableHighAccuracy: true} )
+
+window.addEventListener('deviceorientation', function(e) {
+    // heading = event.compassHeading || event.webkitCompassHeading || 0;
+    heading = e.webkitCompassHeading;
+    $("input[name='heading']").val(heading);
+    // heading = 20
+    // $("p#heading").text(heading);
+}, false);
 
 // create a WebGL renderer, camera and a scene
 var renderer;
@@ -37,6 +60,9 @@ var radians;
 /*******************************************************************************/
 /***************************** FUNCTION DEFINITION *****************************/
 /*******************************************************************************/
+
+// onCreate();
+// onFrame();
 
 function onCreate() {
     /***************************** SETUP SCENE *****************************/
@@ -89,11 +115,25 @@ function onCreate() {
       // material
       THREE.ImageUtils.crossOrigin = "anonymous";
 
-      for (var i = 0; i < 10; i++) {
-          var pos = {x: randCoord(), y:1, z:randCoord()};
-          var theta = Math.random();
-          initImage('pic1.jpg',pos, theta );
-      };
+    //   for (var i = 0; i < 10; i++) {
+    //     //   var x = loc.coords.longitude -
+    //       var pos = {x: randCoord(), y: 1, z: randCoord()};
+    //       var theta = Math.random();
+    //       initImage('pic1.jpg', pos, theta );
+    //   };
+
+    graffitiArray.forEach(function(graffiti) {
+        // console.log(loc.coords.longitude)
+        // console.log(parseFloat(graffiti.lng))
+        var pos = {
+            x: (loc.coords.longitude - parseFloat(graffiti.lng)) * 1000,
+            y: 1,
+            z: randCoord()};
+        var theta = Math.random();
+        console.log(pos, theta);
+        var name = './pics/' + graffiti.id + ".jpg"
+        initImage(name, pos, theta );
+    })
 
     /***************************** SETUP PointLight *****************************/
     var pointLight = new THREE.PointLight( 0xFFFFFF );
@@ -127,7 +167,7 @@ function onCreate() {
     var container = $('#container');
 
     // attach the render-supplied DOM element
-    // window.addEventListener('keydown', checkKey, false);
+    window.addEventListener('keydown', checkKey, false);
     // window.addEventListener( 'resize', onWindowResize, false );
 
     container.append(renderer.domElement);
@@ -145,7 +185,9 @@ function onFrame() {
 
     if (! isNaN(radians) ) camera.rotation.y = -radians
 
-    renderer.render(scene, camera);
+    renderScene();
+
+    // renderer.render(scene, camera);
 }
 
 // function onFrame() {
@@ -236,6 +278,17 @@ function checkKey(event) {
             // camera.lookAt(camera.position);
             break;
 
+        case 69:
+            camera.rotation.y += 0.01;
+            console.log("7/camera.rotation.y: ",camera.rotation.y);
+            // camera.lookAt(camera.rotation);
+            break;
+
+        case 81:
+            camera.rotation.y -= 0.01;
+            console.log("9/camera.rotation.y: ",camera.rotation.y);
+            // camera.lookAt(camera.rotation);
+            break;
 
 
         case 97:
@@ -306,6 +359,3 @@ function checkKey(event) {
 
 
 }
-
-onCreate();
-// onFrame();
