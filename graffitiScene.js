@@ -128,7 +128,7 @@ function onCreate() {
         var pos = {
             x: (loc.coords.longitude - parseFloat(graffiti.lng)) * 1000,
             y: 1,
-            z: randCoord()};
+            z: (loc.coords.longitude - parseFloat(graffiti.lng)) * 1000};
         var theta = Math.random();
         console.log(pos, theta);
         var name = './pics/' + graffiti.id + ".jpg"
