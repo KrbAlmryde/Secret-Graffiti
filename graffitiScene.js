@@ -20,9 +20,9 @@ locationHandler = function(location) {
                 onCreate();
             } else {
                 images.forEach(function(image) {
-                    image.position.x = (loc.coords.longitude - parseFloat(image.graffiti.lng));
+                    image.position.x = loc.coords.longitude - parseFloat(image.graffiti.lng);
                     image.position.y = 0;
-                    image.position.z = (loc.coords.longitude - parseFloat(image.graffiti.lng));
+                    image.position.z = (parseFloat(image.graffiti.lat) - loc.coords.latitude);
                 })
             }
 
@@ -60,6 +60,7 @@ locationHandler = function(location) {
 }
 
 navigator.geolocation.watchPosition( locationHandler, null, {maximumAge: 0, enableHighAccuracy: true} )
+// window.setInterval(navigator.geolocation.getCurrentPosition(locationHandler, null, {maximumAge: 0, enableHighAccuracy: true}), 500);
 
 window.addEventListener('deviceorientation', function(e) {
     // heading = event.compassHeading || event.webkitCompassHeading || 0;
