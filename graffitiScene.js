@@ -19,15 +19,33 @@ locationHandler = function(location) {
                 initFlag = 1;
                 onCreate();
             } else {
-                images.forEach(function(image) {
-                    image.position.x = (loc.coords.longitude - parseFloat(graffiti.lng)) * 10000;
-                    image.position.z = (loc.coords.longitude - parseFloat(graffiti.lng)) * 10000;
-                })
+                // images.forEach(function(image) {
+                //     image.position.x = (loc.coords.longitude - parseFloat(image.graffiti.lng));
+                //     image.position.y = 0;
+                //     image.position.z = (loc.coords.longitude - parseFloat(image.graffiti.lng));
+                // })
             }
+
+            window.setInterval(function() {
+                // images.forEach(function(image) {
+                //     image.position.x += (loc.coords.longitude - parseFloat(image.graffiti.lng)) * 10000;
+                //     image.position.z = (loc.coords.longitude - parseFloat(image.graffiti.lng)) * 10000;
+                // })
+
+                images[5].position.y = 0;
+                images[5].position.x = 0;
+                images[5].position.z = -100;
+                console.log(images[5].position.x)
+                console.log(images[5].position.z)
+                console.log(images[5].graffiti.lng)
+                console.log(images[5].graffiti.lat)
+            }, 500)
+
         })
 
     $("input[name='lat']").val(loc.coords.latitude);
     $("input[name='lng']").val(loc.coords.longitude);
+    $("p#lat").text(loc.coords.latitude);
 
     // console.log(loc.coords.latitude);
 
@@ -118,10 +136,9 @@ function onCreate() {
 
     graffitiArray.forEach(function(graffiti) {
         var pos = {
-            x: (loc.coords.longitude - parseFloat(graffiti.lng)) * 10000,
-            y: 1,
+            x: (loc.coords.longitude - parseFloat(graffiti.lng)),
             y: 0,
-            z: (loc.coords.latitude - parseFloat(graffiti.lat)) * 10000};
+            z: (loc.coords.latitude - parseFloat(graffiti.lat))};
         var theta = Math.random();
         console.log(pos, theta);
         var name = './pics/' + graffiti.id + ".jpg"
@@ -135,9 +152,11 @@ function onCreate() {
         // img.overdraw = true;
         img.needsUpdate = true;
         img.position.x = pos.x;
-        img.position.y = 10;
+        img.position.y = pos.y;
         img.position.z = pos.z;
         img.rotation.y = theta;
+
+        img.graffiti = { lat: graffiti.lat, lng: graffiti.lng }
         images.push(img);
 
     })
@@ -196,9 +215,7 @@ function onFrame() {
 
     if (! isNaN(radians) ) camera.rotation.y = radians
 
-    var material = new THREE.LineBasicMaterial({
-        color: 0x0000ff
-    });
+
     var matb = new THREE.LineBasicMaterial({
         color: 0xff0000
     });
@@ -209,6 +226,9 @@ function onFrame() {
     var line = new THREE.Line(geometry, matb);
     scene.add(line);
 
+    var material = new THREE.LineBasicMaterial({
+        color: 0x0000ff
+    });
     geo = new THREE.Geometry();
     geo.vertices.push(new THREE.Vector3(0, -1, 0));
     geo.vertices.push(new THREE.Vector3(0, -1, 10));
@@ -235,7 +255,7 @@ function initImage(fname, pos, theta){
                                 side: THREE.DoubleSide});
 
       // image
-      var img =  new THREE.Mesh(new THREE.PlaneGeometry(20, 20), material);
+      var img =  new THREE.Mesh(new THREE.PlaneGeometry(10, 10), material);
       // var img = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), material);
       // img.overdraw = true;
       img.needsUpdate = true;
@@ -260,12 +280,12 @@ function checkKey(event) {
 
     switch(event.keyCode){
         case 104:
-            camera.position.z -= 1;
+            camera.position.z -= 0.01;
             console.log("8/camera.position.z: ",camera.position.z);
             // camera.lookAt(camera.position);
             break;
         case 101:
-            camera.position.z += 1;
+            camera.position.z += 0.01;
             console.log("5/camera.position.z: ",camera.position.z);
             // camera.lookAt(camera.position);
             break;

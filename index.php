@@ -13,6 +13,8 @@
         <p id="heading">heading goes here</p>
         <p id="rotation">rotation goes here</p>
         <p id="camera">camera goes here</p> -->
+        <p id="lat"></p><p id="lng"></p>
+        <p id="x"></p><p id="y"></p>
         <div id="container"></div>
         <form action="./draw.php" method="post">
             <input name="lat" type="hidden" value="null">
