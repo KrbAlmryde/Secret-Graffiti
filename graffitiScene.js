@@ -38,7 +38,8 @@ navigator.geolocation.watchPosition( locationHandler, null, {maximumAge: 0, enab
 
 window.addEventListener('deviceorientation', function(e) {
     // heading = event.compassHeading || event.webkitCompassHeading || 0;
-    heading = e.webkitCompassHeading + window.orientation;
+    console.log(window.orientation);
+    heading = e.webkitCompassHeading;
     $("input[name='heading']").val(heading);
     // $("p#heading").text(heading);
 }, false);
@@ -68,13 +69,13 @@ function onCreate() {
 
     /***************************** SETUP CAMERA *****************************/
 
-    scene.rotation.y = 20 * Math.PI / 180;
+    // scene.rotation.y = 20 * Math.PI / 180;
 
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
     camera.lat = Math.random();
     camera.lng = Math.random();
-    camera.position.set(0,2,0);
-    camera.lookAt(scene.position);
+    camera.position.set(0,0,0);
+    camera.lookAt(new THREE.Vector3(0,0,1));
     // camera.lookAt(new THREE.Vector3(0,2,0));
     // camera.lookAt(new THREE.Vector3(0,0,1));
     // console.log(camera.position)
@@ -126,7 +127,7 @@ function onCreate() {
         var name = './pics/' + graffiti.id + ".jpg"
 
         var material = new THREE.MeshBasicMaterial({
-                                map: THREE.ImageUtils.loadTexture(fname),
+                                map: THREE.ImageUtils.loadTexture(name),
                                 side: THREE.DoubleSide});
 
         // image
@@ -141,7 +142,7 @@ function onCreate() {
 
     })
 
-    images.foreach(function(img) {
+    images.forEach(function(img) {
         scene.add(img);
     })
 
@@ -246,10 +247,6 @@ function initImage(fname, pos, theta){
 
 }
 
-function updateImage(name, pos, theta );{
-
-}
-
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -295,14 +292,14 @@ function checkKey(event) {
             break;
 
         case 69:
-            heading += 0.01;
-            console.log("7/camera.rotation.y: ",camera.rotation.y);
+            heading += 2;
+            //console.log("7/camera.rotation.y: ",camera.rotation.y);
             // heading -= 2;
             break;
 
         case 81:
-            heading -= 0.01;
-            console.log("9/camera.rotation.y: ",camera.rotation.y);
+            heading -= 2;
+            //console.log("9/camera.rotation.y: ",camera.rotation.y);
             // heading += 2;
             break;
 
