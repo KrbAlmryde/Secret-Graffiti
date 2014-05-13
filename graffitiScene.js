@@ -177,7 +177,7 @@ function onFrame() {
 
     radians = heading * (Math.PI / 180)
 
-    if (! isNaN(radians) ) camera.rotation.y = -radians
+    if (! isNaN(radians) ) camera.rotation.y = radians
 
     var material = new THREE.LineBasicMaterial({
         color: 0x0000ff
