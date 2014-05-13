@@ -176,6 +176,7 @@
                     ).done(function(o) {
                         console.log('saved');
                         console.info(o);
+                        window.location.assign("index.php");
                     });
                 }
 
