@@ -1,22 +1,75 @@
+// Update location and heading
+
+var loc = {}
+var heading = 0
+var graffitiArray = []
+var initFlag = 0
+var images = [];
+
+locationHandler = function(location) {
+
+    loc = location;
+
+    $.getJSON("script.php", { getNearby: 1 })
+        .done(function(result) {
+            console.log("done");
+            graffitiArray = result;
+            console.info(graffitiArray);
+            if (initFlag === 0) {
+                initFlag = 1;
+                onCreate();
+            } else {
+                images.forEach(function(image) {
+                    image.position.x = (loc.coords.longitude - parseFloat(graffiti.lng)) * 10000;
+                    image.position.z = (loc.coords.longitude - parseFloat(graffiti.lng)) * 10000;
+                })
+            }
+        })
+
+
+
+    // $.getJSON("script.php", { getNearby: 1 })
+    //     .done(function(result) {
+    //         graffitiArray = result;
+    //         console.info(graffitiArray);
+    //         if (initFlag === 0) {
+    //             initFlag = 1;
+    //             onCreate();
+    //         }
+    //     })
+
+    // console.log(loc.coords.latitude);
+    $("input[name='lat']").val(loc.coords.latitude);
+    $("input[name='lng']").val(loc.coords.longitude);
+    // $("<p>" + loc.coords.latitude + "," + loc.coords.latitude + "," + loc.coords.heading + "</p>").appendTo("body");
+}
+
+navigator.geolocation.watchPosition( locationHandler, null, {maximumAge: 0, enableHighAccuracy: true} )
+
+window.addEventListener('deviceorientation', function(e) {
+    // heading = event.compassHeading || event.webkitCompassHeading || 0;
+    heading = e.webkitCompassHeading;
+    $("input[name='heading']").val(heading);
+    // heading = 20
+    // $("p#heading").text(heading);
+}, false);
+
 // create a WebGL renderer, camera and a scene
 var renderer;
 var camera;
 var scene;
 var plane;
 var image;
-var images; // This is in anticipation for an array of images
 
 var colors = [0xFF0000, 0x00FF00, 0x0000FF, 0x00FFFF, 0xFF0000, 0x00FF00, 0x0000FF, 0x00FFFF, 0x808080];
 var radians;
 
-
-onCreate();
-onFrame();
-
-
 /*******************************************************************************/
 /***************************** FUNCTION DEFINITION *****************************/
 /*******************************************************************************/
+
+// onCreate();
+// onFrame();
 
 function onCreate() {
     /***************************** SETUP SCENE *****************************/
@@ -30,49 +83,47 @@ function onCreate() {
     camera.lat = Math.random();
     camera.lng = Math.random();
     camera.position.set(0,2,0);
-    // camera.lookAt(scene.position);
+    camera.lookAt(scene.position);
     // camera.lookAt(new THREE.Vector3(0,2,0));
-    camera.lookAt(camera.position);
+    // camera.lookAt(new THREE.Vector3(0,0,1));
+    // console.log(camera.position)
     scene.add(camera);
-
-
-    /**************************** SETUP PLANE ****************************/
-    var positions = [{x:0, y:0, z:100},
-                     {x:100, y:0, z:100},
-                     {x:-100, y:0, z:100},
-
-                     {x:0, y:0, z:0},
-                     {x:100, y:0, z:0},
-                     {x:-100, y:0, z:0},
-
-                     {x:0, y:0, z:-100},
-                     {x:100, y:0, z:-100},
-                     {x:-100, y:0, z:-100}];
-
-    for (var i = 0; i < 9; i++) {
-        var aPlane = new THREE.Mesh(new THREE.PlaneGeometry( 100, 100 ),
-                               new THREE.MeshBasicMaterial(
-                                    {color: colors[i],
-                                     side: THREE.DoubleSide} )
-                               );
-        aPlane.position.set(
-                                positions[i].x,
-                                positions[i].y,
-                                positions[i].z
-                            );
-        aPlane.rotation.x = Math.PI/2; //angles[i];
-        scene.add( aPlane );
-    }
 
     /***************************** SETUP IMAGE(S) *****************************/
       // material
-      THREE.ImageUtils.crossOrigin = "anonymous";
+    THREE.ImageUtils.crossOrigin = "anonymous";
 
-      for (var i = 0; i < 10; i++) {
-          var pos = {x: randCoord(), y:1, z:randCoord()};
-          var theta = Math.random();
-          initImage('pic1.jpg',pos, theta );
-      };
+    graffitiArray.forEach(function(graffiti) {
+        // console.log(loc.coords.longitude)
+        // console.log(parseFloat(graffiti.lng))
+        var pos = {
+            x: (loc.coords.longitude - parseFloat(graffiti.lng)) * 10000,
+            y: 1,
+            z: (loc.coords.latitude - parseFloat(graffiti.lat)) * 10000};
+        var theta = Math.random();
+        console.log(pos, theta);
+        var name = './pics/' + graffiti.id + ".jpg"
+
+        var material = new THREE.MeshBasicMaterial({
+                                map: THREE.ImageUtils.loadTexture(fname),
+                                side: THREE.DoubleSide});
+
+        // image
+        var img =  new THREE.Mesh(new THREE.PlaneGeometry(20, 20), material);
+        // img.overdraw = true;
+        img.needsUpdate = true;
+        img.position.x = pos.x;
+        img.position.y = 10;
+        img.position.z = pos.z;
+        img.rotation.y = theta;
+        images.push(img);
+
+    })
+
+    images.foreach(function(img) {
+        scene.add(img);
+    })
+
 
     /***************************** SETUP PointLight *****************************/
     var pointLight = new THREE.PointLight( 0xFFFFFF );
@@ -86,14 +137,15 @@ function onCreate() {
     /***************************** SETUP RENDERER *****************************/
     // Check whether the browser supports WebGL
 
-    if(Detector.webgl){
-        renderer = new THREE.WebGLRenderer({antialias:true});
-        // alert("In WebGL mode!!");
-    // If its not supported, instantiate the canvas renderer to support all non WebGL browsers
-    } else {
-        renderer = new THREE.CanvasRenderer();
-        // alert("In Canvas mode!!");
-    }
+    // if(Detector.webgl){
+    //     renderer = new THREE.WebGLRenderer({antialias:true});
+    //     // alert("In WebGL mode!!");
+    // // If its not supported, instantiate the canvas renderer to support all non WebGL browsers
+    // } else {
+    //     renderer = new THREE.CanvasRenderer();
+    //     // alert("In Canvas mode!!");
+    // }
+    renderer = new THREE.CanvasRenderer();
 
     // Set the background color of the renderer to black, with full opacity
     renderer.setClearColor(0x000000, 1);
@@ -106,23 +158,27 @@ function onCreate() {
 
     // attach the render-supplied DOM element
     window.addEventListener('keydown', checkKey, false);
-    window.addEventListener( 'resize', onWindowResize, false );
+    // window.addEventListener( 'resize', onWindowResize, false );
 
     container.append(renderer.domElement);
 
     $(window).load(renderScene);
-    onFrame()l
+
+    onFrame();
 }
 
 function onFrame() {
-    radians = heading * (Math.PI / 180);
-    if (! Number.isNaN(radians) ) camera.rotation.y = radians;
-    camera.updateProjectionMatrix();
-    requestAnimationFrame(onFrame);
+    requestAnimationFrame(onFrame)
 
-    // draw!
+    radians = heading * (Math.PI / 180)
+
+    if (! isNaN(radians) ) camera.rotation.y = -radians
+
     renderScene();
+
+    // renderer.render(scene, camera);
 }
+
 
 function renderScene() {
     renderer.render(scene, camera);
@@ -139,17 +195,20 @@ function initImage(fname, pos, theta){
                                 side: THREE.DoubleSide});
 
       // image
-      var img = new THREE.Mesh(new THREE.PlaneGeometry(20, 20), material);
+      var img =  new THREE.Mesh(new THREE.PlaneGeometry(20, 20), material);
       // img.overdraw = true;
-      // img.needsUpdate = true;
+      img.needsUpdate = true;
       img.position.x = pos.x;
       img.position.y = 10;
       img.position.z = pos.z;
       img.rotation.y = theta;
-      scene.add(img);
+      images.push(img);
 
 }
 
+function updateImage(name, pos, theta );{
+
+}
 
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -157,8 +216,6 @@ function onWindowResize() {
     renderer.setSize( window.innerWidth, window.innerHeight );
     renderScene();
 }
-
-
 
 function checkKey(event) {
 
@@ -197,6 +254,17 @@ function checkKey(event) {
             // camera.lookAt(camera.position);
             break;
 
+        case 69:
+            heading += 0.01;
+            console.log("7/camera.rotation.y: ",camera.rotation.y);
+            // camera.lookAt(camera.rotation);
+            break;
+
+        case 81:
+            heading -= 0.01;
+            console.log("9/camera.rotation.y: ",camera.rotation.y);
+            // camera.lookAt(camera.rotation);
+            break;
 
 
         case 97:

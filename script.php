@@ -23,25 +23,78 @@ function downloadThumbById($id, $dbxClient, $size) {
 	}
 }
 
-function saveGraffiti($db, $data64) {
+function saveGraffiti($db, $data64, $dbxClient) {
+
+	$lat = $_POST['lat'];
+	$lng = $_POST['lng'];
+	$alpha = $_POST['heading'];
+
+	pg_query($db, "INSERT INTO graffiti (lat, lng, alpha) VALUES ($lat, $lng, $alpha);");
+
 	$data64 = str_replace('data:image/jpeg;base64,', '', $data64);
 	$data64 = str_replace(' ','+',$data64);
 	$data = base64_decode($data64);
 
 	$result = pg_query($db, "SELECT id FROM graffiti ORDER BY id DESC LIMIT 1;");
 	$maxId = pg_fetch_result($result, "id");
-	$newId = $maxId + 1;
+	// $newId = $maxId + 1;
+	$newId = $maxId;
 
 	file_put_contents("./pics/" . $newId . ".jpg", $data);
-	// file_put_contents("./pics/test.txt", $data64);
-	// 	$dbxClient->uploadFile("/1.jpg", dbx\WriteMode::force(), $file);
-	// 	fclose($file);
+
+	$writeMode = \Dropbox\WriteMode::force();
+
+	$result = $dbxClient->uploadFileFromString("/" . $newId . ".jpg", $writeMode, $data);
+
+	// $dbxClient->uploadFile("5.jpg", $writeMode, $file);
+
+	// $result = $dbxClient->uploadFile("5" . ".jpg", dbx\WriteMode::force(), $file);
+	// $result = $dbxClient->uploadFileFromString("10", dbx\WriteMode::force(), $data);
+
+	// fclose($file);
+
+	// $folderMetadata = $dbxClient->getMetadataWithChildren("/");
+
+	// $file = fopen("./pics/" . $newId . ".jpg", "rb");
+	// $file = fopen("./pics/brick.jpg", "rb");
+
+	// $dbxClient->uploadFile("5.jpg", dbx\WriteMode::force(), $file);
+	// $dbxClient->uploadFileFromString("/foo.jpg", $writeMode, "foo.jpg");
+
+	// fclose($file);
+
+	// print_r($folderMetadata);
+
+	// $result =
+
+	// echo($writeMode);
+
+	//
+	// $dbxClient->uploadFile($newId . ".jpg", dbx\WriteMode::force(), $data);
+
+	echo($result);
 }
 
 $data64 = $_POST['imgBase64'];
 
 if ($data64) {
-	saveGraffiti($db, $data64);
+	// Save the image
+	saveGraffiti($db, $data64, $dbxClient);
+
+	// pg_query($db, "SELECT id FROM graffiti ORDER BY id DESC LIMIT 1;");
+}
+
+if($_GET['getNearby']) {
+	$result = pg_query($db, "SELECT * FROM graffiti;");
+	$rows = pg_fetch_all($result);
+
+	foreach ($rows as $row) {
+		$id = $row["id"];
+		downloadThumbById($id, $dbxClient, "m");
+	}
+
+	echo json_encode($rows);
+	// echo json_encode("test");
 }
 
 // saveGraffiti($db);

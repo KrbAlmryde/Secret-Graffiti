@@ -4,11 +4,11 @@
 
 require_once "dropbox-sdk/Dropbox/autoload.php";
 // require_once "script.php";
-// use \Dropbox as dbx;
+use \Dropbox as dbx;
 
-// $accessToken = "2pmnCeiQIlgAAAAAAAAERHyC0MgB03sTgSCouSyxj2lKwoH27DLkz7PB9ZpzXset";
+$accessToken = "2pmnCeiQIlgAAAAAAAAERHyC0MgB03sTgSCouSyxj2lKwoH27DLkz7PB9ZpzXset";
 
-// $dbxClient = new dbx\Client($accessToken, "secret-graffiti");
+$dbxClient = new dbx\Client($accessToken, "secret-graffiti");
 // $accountInfo = $dbxClient->getAccountInfo();
 // print_r($accountInfo);
 
@@ -25,6 +25,9 @@ pg_query($db, "ALTER TABLE graffiti ADD COLUMN alpha real;");
 pg_query($db, "UPDATE graffiti SET alpha = 193.76 WHERE id = 1;");
 pg_query($db, "UPDATE graffiti SET alpha = 34.6 WHERE id = 2;");
 pg_query($db, "UPDATE graffiti SET lat = 54 WHERE id = 1;");
+//
+
+// pg_query($db, "DELETE FROM graffiti WHERE id = 5");
 
 $result = pg_query($db, "SELECT * FROM graffiti");
 $rows = pg_fetch_all($result);
@@ -59,7 +62,7 @@ foreach ($rows as $row) {
 		echo("<td>" . $field . "</td>");
 	}
 	downloadThumbById($id, $dbxClient, "m");
-	echo("<td><img src='pics/" . $id . ".jpg' /></td>");
+	echo("<td><img src='pics/" . $id . ".jpg' width='200' /></td>");
 	echo("</tr>");
 }
 echo("</tbody>");
