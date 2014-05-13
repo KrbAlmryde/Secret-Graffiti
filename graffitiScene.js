@@ -11,28 +11,20 @@ locationHandler = function(location) {
 
     $.getJSON("script.php", { getNearby: 1 })
         .done(function(result) {
-            console.log("done");
+            // console.log("done");
             graffitiArray = result;
-            console.info(graffitiArray);
+            // console.info(graffitiArray);
             if (initFlag === 0) {
                 initFlag = 1;
                 onCreate();
             }
         })
 
-    // $.getJSON("script.php", { getNearby: 1 })
-    //     .done(function(result) {
-    //         graffitiArray = result;
-    //         console.info(graffitiArray);
-    //         if (initFlag === 0) {
-    //             initFlag = 1;
-    //             onCreate();
-    //         }
-    //     })
-
-    // console.log(loc.coords.latitude);
     $("input[name='lat']").val(loc.coords.latitude);
     $("input[name='lng']").val(loc.coords.longitude);
+
+    // console.log(loc.coords.latitude);
+
     // $("<p>" + loc.coords.latitude + "," + loc.coords.latitude + "," + loc.coords.heading + "</p>").appendTo("body");
 }
 
@@ -42,7 +34,6 @@ window.addEventListener('deviceorientation', function(e) {
     // heading = event.compassHeading || event.webkitCompassHeading || 0;
     heading = e.webkitCompassHeading;
     $("input[name='heading']").val(heading);
-    // heading = 20
     // $("p#heading").text(heading);
 }, false);
 
@@ -72,15 +63,20 @@ function onCreate() {
 
     /***************************** SETUP CAMERA *****************************/
 
+    scene.rotation.y = 20 * Math.PI / 180;
+
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
-    camera.lat = Math.random();
-    camera.lng = Math.random();
-    camera.position.set(0,2,0);
+
+    camera.position.set(0,0,0);
+    camera.lookAt(new THREE.Vector3(0,0,1))
+
     // camera.lookAt(scene.position);
     // camera.lookAt(new THREE.Vector3(0,2,0));
     // camera.lookAt(new THREE.Vector3(0,0,1));
     // console.log(camera.position)
     scene.add(camera);
+
+    // scene.rotation.y = 10 * Math.PI / 180;
 
 
     /**************************** SETUP PLANE ****************************/
@@ -123,11 +119,9 @@ function onCreate() {
     //   };
 
     graffitiArray.forEach(function(graffiti) {
-        // console.log(loc.coords.longitude)
-        // console.log(parseFloat(graffiti.lng))
         var pos = {
             x: (loc.coords.longitude - parseFloat(graffiti.lng)) * 10000,
-            y: 1,
+            y: 0,
             z: (loc.coords.longitude - parseFloat(graffiti.lng)) * 10000};
         var theta = Math.random();
         console.log(pos, theta);
@@ -168,7 +162,7 @@ function onCreate() {
 
     // attach the render-supplied DOM element
     window.addEventListener('keydown', checkKey, false);
-    // window.addEventListener( 'resize', onWindowResize, false );
+    window.addEventListener( 'resize', onWindowResize, false );
 
     container.append(renderer.domElement);
 
@@ -184,6 +178,22 @@ function onFrame() {
     radians = heading * (Math.PI / 180)
 
     if (! isNaN(radians) ) camera.rotation.y = -radians
+
+    var material = new THREE.LineBasicMaterial({
+        color: 0x0000ff
+    });
+
+    var geometry = new THREE.Geometry();
+    geometry.vertices.push(new THREE.Vector3(0, -1, 0));
+    geometry.vertices.push(new THREE.Vector3(10, -1, 0));
+    var line = new THREE.Line(geometry, material);
+    scene.add(line);
+
+    geo = new THREE.Geometry();
+    geo.vertices.push(new THREE.Vector3(0, -1, 0));
+    geo.vertices.push(new THREE.Vector3(0, -1, 10));
+    var lineB = new THREE.Line(geo, material);
+    scene.add(lineB);
 
     renderScene();
 
@@ -215,18 +225,17 @@ function randCoord() {
   return Math.floor(Math.random() * (100 - -100 + 1)) + -100;
 }
 
-
 function initImage(fname, pos, theta){
       var material = new THREE.MeshBasicMaterial({
                                 map: THREE.ImageUtils.loadTexture(fname),
                                 side: THREE.DoubleSide});
 
       // image
-      var img = new THREE.Mesh(new THREE.PlaneGeometry(20, 20), material);
+      var img = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), material);
       // img.overdraw = true;
       // img.needsUpdate = true;
       img.position.x = pos.x;
-      img.position.y = 10;
+      img.position.y = pos.y;
       img.position.z = pos.z;
       img.rotation.y = theta;
       scene.add(img);
@@ -279,14 +288,14 @@ function checkKey(event) {
             break;
 
         case 69:
-            camera.rotation.y += 0.01;
-            console.log("7/camera.rotation.y: ",camera.rotation.y);
+            heading += 2;
+            // console.log("7/camera.rotation.y: ",camera.rotation.y);
             // camera.lookAt(camera.rotation);
             break;
 
         case 81:
-            camera.rotation.y -= 0.01;
-            console.log("9/camera.rotation.y: ",camera.rotation.y);
+            heading -= 2;
+            // console.log("9/camera.rotation.y: ",camera.rotation.y);
             // camera.lookAt(camera.rotation);
             break;
 

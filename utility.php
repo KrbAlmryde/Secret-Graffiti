@@ -22,10 +22,16 @@ $db = pg_connect(pg_connection_string());
 if (!$db) echo("Couldn't connect to remote database.<br>");
 
 pg_query($db, "ALTER TABLE graffiti ADD COLUMN alpha real;");
+pg_query($db, "ALTER TABLE graffiti ALTER COLUMN lat TYPE numeric(15,12);");
+pg_query($db, "ALTER TABLE graffiti ALTER COLUMN lng TYPE numeric(15,12);");
 pg_query($db, "UPDATE graffiti SET alpha = 193.76 WHERE id = 1;");
 pg_query($db, "UPDATE graffiti SET alpha = 34.6 WHERE id = 2;");
 pg_query($db, "UPDATE graffiti SET lat = 54 WHERE id = 1;");
-//
+
+if ($_GET['delete']) {
+	$id = $_GET['delete'];
+	pg_query($db, "DELETE FROM graffiti WHERE id = $id");
+}
 
 // pg_query($db, "DELETE FROM graffiti WHERE id = 5");
 
@@ -52,7 +58,7 @@ echo("<table><thead><tr>");
 foreach ($num_fields as $key => $value) {
 	echo( "<th>" . pg_field_name($result, $key) . "</th>" );
 }
-echo("<th>thumbnail</th>");
+echo("<th>thumbnail</th><th>delete</th>");
 echo("</tr></thead>");
 echo("<tbody>");
 foreach ($rows as $row) {
@@ -63,6 +69,7 @@ foreach ($rows as $row) {
 	}
 	downloadThumbById($id, $dbxClient, "m");
 	echo("<td><img src='pics/" . $id . ".jpg' width='200' /></td>");
+	echo("<td><a href='utility.php?delete=" . $id . "'>delete</a></td>");
 	echo("</tr>");
 }
 echo("</tbody>");
