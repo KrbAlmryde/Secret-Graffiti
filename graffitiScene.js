@@ -12,9 +12,9 @@ locationHandler = function(location) {
 
     $.getJSON("script.php", { getNearby: 1 })
         .done(function(result) {
-            console.log("done");
+            // console.log("done");
             graffitiArray = result;
-            console.info(graffitiArray);
+            // console.info(graffitiArray);
             if (initFlag === 0) {
                 initFlag = 1;
                 onCreate();
@@ -26,21 +26,11 @@ locationHandler = function(location) {
             }
         })
 
-
-
-    // $.getJSON("script.php", { getNearby: 1 })
-    //     .done(function(result) {
-    //         graffitiArray = result;
-    //         console.info(graffitiArray);
-    //         if (initFlag === 0) {
-    //             initFlag = 1;
-    //             onCreate();
-    //         }
-    //     })
-
-    // console.log(loc.coords.latitude);
     $("input[name='lat']").val(loc.coords.latitude);
     $("input[name='lng']").val(loc.coords.longitude);
+
+    // console.log(loc.coords.latitude);
+
     // $("<p>" + loc.coords.latitude + "," + loc.coords.latitude + "," + loc.coords.heading + "</p>").appendTo("body");
 }
 
@@ -50,7 +40,6 @@ window.addEventListener('deviceorientation', function(e) {
     // heading = event.compassHeading || event.webkitCompassHeading || 0;
     heading = e.webkitCompassHeading;
     $("input[name='heading']").val(heading);
-    // heading = 20
     // $("p#heading").text(heading);
 }, false);
 
@@ -79,6 +68,8 @@ function onCreate() {
 
     /***************************** SETUP CAMERA *****************************/
 
+    scene.rotation.y = 20 * Math.PI / 180;
+
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
     camera.lat = Math.random();
     camera.lng = Math.random();
@@ -89,16 +80,46 @@ function onCreate() {
     // console.log(camera.position)
     scene.add(camera);
 
+    // scene.rotation.y = 10 * Math.PI / 180;
+
+
+    /**************************** SETUP PLANE ****************************/
+    // var positions = [{x:0, y:0, z:100},
+    //                  {x:100, y:0, z:100},
+    //                  {x:-100, y:0, z:100},
+    //
+    //                  {x:0, y:0, z:0},
+    //                  {x:100, y:0, z:0},
+    //                  {x:-100, y:0, z:0},
+    //
+    //                  {x:0, y:0, z:-100},
+    //                  {x:100, y:0, z:-100},
+    //                  {x:-100, y:0, z:-100}];
+    //
+    // for (var i = 0; i < 9; i++) {
+    //     var aPlane = new THREE.Mesh(new THREE.PlaneGeometry( 100, 100 ),
+    //                            new THREE.MeshBasicMaterial(
+    //                                 {color: colors[i],
+    //                                  side: THREE.DoubleSide} )
+    //                            );
+    //     aPlane.position.set(
+    //                             positions[i].x,
+    //                             positions[i].y,
+    //                             positions[i].z
+    //                         );
+    //     aPlane.rotation.x = Math.PI/2; //angles[i];
+    //     scene.add( aPlane );
+    // }
+
     /***************************** SETUP IMAGE(S) *****************************/
       // material
     THREE.ImageUtils.crossOrigin = "anonymous";
 
     graffitiArray.forEach(function(graffiti) {
-        // console.log(loc.coords.longitude)
-        // console.log(parseFloat(graffiti.lng))
         var pos = {
             x: (loc.coords.longitude - parseFloat(graffiti.lng)) * 10000,
             y: 1,
+            y: 0,
             z: (loc.coords.latitude - parseFloat(graffiti.lat)) * 10000};
         var theta = Math.random();
         console.log(pos, theta);
@@ -158,7 +179,7 @@ function onCreate() {
 
     // attach the render-supplied DOM element
     window.addEventListener('keydown', checkKey, false);
-    // window.addEventListener( 'resize', onWindowResize, false );
+    window.addEventListener( 'resize', onWindowResize, false );
 
     container.append(renderer.domElement);
 
@@ -172,7 +193,26 @@ function onFrame() {
 
     radians = heading * (Math.PI / 180)
 
-    if (! isNaN(radians) ) camera.rotation.y = -radians
+    if (! isNaN(radians) ) camera.rotation.y = radians
+
+    var material = new THREE.LineBasicMaterial({
+        color: 0x0000ff
+    });
+    var matb = new THREE.LineBasicMaterial({
+        color: 0xff0000
+    });
+    // Red is x, blue is Z
+    var geometry = new THREE.Geometry();
+    geometry.vertices.push(new THREE.Vector3(0, -1, 0));
+    geometry.vertices.push(new THREE.Vector3(10, -1, 0));
+    var line = new THREE.Line(geometry, matb);
+    scene.add(line);
+
+    geo = new THREE.Geometry();
+    geo.vertices.push(new THREE.Vector3(0, -1, 0));
+    geo.vertices.push(new THREE.Vector3(0, -1, 10));
+    var lineB = new THREE.Line(geo, material);
+    scene.add(lineB);
 
     renderScene();
 
@@ -188,7 +228,6 @@ function randCoord() {
   return Math.floor(Math.random() * (100 - -100 + 1)) + -100;
 }
 
-
 function initImage(fname, pos, theta){
       var material = new THREE.MeshBasicMaterial({
                                 map: THREE.ImageUtils.loadTexture(fname),
@@ -196,10 +235,11 @@ function initImage(fname, pos, theta){
 
       // image
       var img =  new THREE.Mesh(new THREE.PlaneGeometry(20, 20), material);
+      // var img = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), material);
       // img.overdraw = true;
       img.needsUpdate = true;
       img.position.x = pos.x;
-      img.position.y = 10;
+      img.position.y = pos.y;
       img.position.z = pos.z;
       img.rotation.y = theta;
       images.push(img);
@@ -257,50 +297,44 @@ function checkKey(event) {
         case 69:
             heading += 0.01;
             console.log("7/camera.rotation.y: ",camera.rotation.y);
-            // camera.lookAt(camera.rotation);
+            // heading -= 2;
             break;
 
         case 81:
             heading -= 0.01;
             console.log("9/camera.rotation.y: ",camera.rotation.y);
-            // camera.lookAt(camera.rotation);
+            // heading += 2;
             break;
 
 
         case 97:
             camera.rotation.z += 0.01;
             console.log("0/camera.rotation.z: ",camera.rotation.z);
-            // camera.lookAt(camera.rotation);
             break;
 
         case 99:
             camera.rotation.z -= 0.01;
             console.log("2/camera.rotation.z: ",camera.rotation.z);
-            // camera.lookAt(camera.rotation);
             break;
 
         case 103:
             camera.rotation.y += 0.01;
             console.log("7/camera.rotation.y: ",camera.rotation.y);
-            // camera.lookAt(camera.rotation);
             break;
 
         case 105:
             camera.rotation.y -= 0.01;
             console.log("9/camera.rotation.y: ",camera.rotation.y);
-            // camera.lookAt(camera.rotation);
             break;
 
         case 96:
             camera.rotation.x += 0.01;
             console.log("0/camera.rotation.x: ",camera.rotation.x);
-            // camera.lookAt(camera.rotation);
             break;
 
         case 98:
             camera.rotation.x -= 0.01;
             console.log("2/camera.rotation.x: ",camera.rotation.x);
-            // camera.lookAt(camera.rotation);
             break;
 
         case 82:
@@ -330,8 +364,6 @@ function checkKey(event) {
             console.log("");
             break;
     }
-    // camera.lookAt(camera.position);
-    // camera.lookAt(camera.rotation);
-
+    console.log("heading: " + heading)
 
 }
