@@ -182,11 +182,14 @@ function onFrame() {
     var material = new THREE.LineBasicMaterial({
         color: 0x0000ff
     });
-
+    var matb = new THREE.LineBasicMaterial({
+        color: 0xff0000
+    });
+    // Red is x, blue is Z
     var geometry = new THREE.Geometry();
     geometry.vertices.push(new THREE.Vector3(0, -1, 0));
     geometry.vertices.push(new THREE.Vector3(10, -1, 0));
-    var line = new THREE.Line(geometry, material);
+    var line = new THREE.Line(geometry, matb);
     scene.add(line);
 
     geo = new THREE.Geometry();
@@ -288,13 +291,13 @@ function checkKey(event) {
             break;
 
         case 69:
-            heading += 2;
+            heading -= 2;
             // console.log("7/camera.rotation.y: ",camera.rotation.y);
             // camera.lookAt(camera.rotation);
             break;
 
         case 81:
-            heading -= 2;
+            heading += 2;
             // console.log("9/camera.rotation.y: ",camera.rotation.y);
             // camera.lookAt(camera.rotation);
             break;
@@ -363,6 +366,7 @@ function checkKey(event) {
             console.log("");
             break;
     }
+    console.log("heading: " + heading)
     // camera.lookAt(camera.position);
     // camera.lookAt(camera.rotation);
 
