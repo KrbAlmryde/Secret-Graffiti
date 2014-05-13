@@ -19,27 +19,34 @@ locationHandler = function(location) {
                 initFlag = 1;
                 onCreate();
             } else {
-                // images.forEach(function(image) {
-                //     image.position.x = (loc.coords.longitude - parseFloat(image.graffiti.lng));
-                //     image.position.y = 0;
-                //     image.position.z = (loc.coords.longitude - parseFloat(image.graffiti.lng));
-                // })
+                images.forEach(function(image) {
+                    image.position.x = (loc.coords.longitude - parseFloat(image.graffiti.lng));
+                    image.position.y = 0;
+                    image.position.z = (loc.coords.longitude - parseFloat(image.graffiti.lng));
+                })
             }
 
-            window.setInterval(function() {
-                // images.forEach(function(image) {
-                //     image.position.x += (loc.coords.longitude - parseFloat(image.graffiti.lng)) * 10000;
-                //     image.position.z = (loc.coords.longitude - parseFloat(image.graffiti.lng)) * 10000;
-                // })
-
-                images[5].position.y = 0;
-                images[5].position.x = 0;
-                images[5].position.z = -100;
-                console.log(images[5].position.x)
-                console.log(images[5].position.z)
-                console.log(images[5].graffiti.lng)
-                console.log(images[5].graffiti.lat)
-            }, 500)
+            // window.setInterval(function() {
+            //     // images.forEach(function(image) {
+            //     //     image.position.x += (loc.coords.longitude - parseFloat(image.graffiti.lng)) * 10000;
+            //     //     image.position.z = (loc.coords.longitude - parseFloat(image.graffiti.lng)) * 10000;
+            //     // })
+            //
+            //     images.forEach(function (image) {
+            //         console.log(image.position.x)
+            //         console.log(image.position.z)
+            //         console.log(image.graffiti.lng)
+            //         console.log(image.graffiti.lat)
+            //     })
+            //
+            //     // images[5].position.y = 0;
+            //     // images[5].position.x = 0;
+            //     // images[5].position.z = 0.01;
+            //     // console.log(images[5].position.x)
+            //     // console.log(images[5].position.z)
+            //     // console.log(images[5].graffiti.lng)
+            //     // console.log(images[5].graffiti.lat)
+            // }, 10000)
 
         })
 
@@ -89,7 +96,7 @@ function onCreate() {
 
     // scene.rotation.y = 20 * Math.PI / 180;
 
-    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.00001, 1000);
     camera.lat = Math.random();
     camera.lng = Math.random();
     camera.position.set(0,0,0);
@@ -148,7 +155,7 @@ function onCreate() {
                                 side: THREE.DoubleSide});
 
         // image
-        var img =  new THREE.Mesh(new THREE.PlaneGeometry(20, 20), material);
+        var img =  new THREE.Mesh(new THREE.PlaneGeometry(0.0001, 0.0001), material);
         // img.overdraw = true;
         img.needsUpdate = true;
         img.position.x = pos.x;
