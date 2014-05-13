@@ -39,7 +39,7 @@ navigator.geolocation.watchPosition( locationHandler, null, {maximumAge: 0, enab
 window.addEventListener('deviceorientation', function(e) {
     // heading = event.compassHeading || event.webkitCompassHeading || 0;
     console.log(window.orientation);
-    heading = e.webkitCompassHeading;
+    heading = e.webkitCompassHeading + window.orientation;
     $("input[name='heading']").val(heading);
     // $("p#heading").text(heading);
 }, false);
